@@ -159,6 +159,7 @@ def market():
 def refreshbutton():
   now = datetime.date.today()
   now1=date.today() - timedelta(1)
+  now2=date.today()
   a='mark_prices%s'%now
   f='mark_prices%s'%now1
   punctuations = '''#-'"\,'''
@@ -193,7 +194,17 @@ def refreshbutton():
     cur.execute('''SELECT * FROM %s'''%d)
     rv=cur.fetchall()
   else:
-    cur.execute( "CREATE %s SELECT * FROM %s"%(c,e))
+    cur.execute("SELECT * FROM `updatetables`")
+    update=cur.fetchall()
+    update=list(update)
+    update=str(update[0]['DATE'])
+    now=str(now)
+    print(update,now)
+    cur.execute("UPDATE `updatetables` SET `DATE`='%s' WHERE `DATE`='%s'"%(now,update))
+    cur.execute("SELECT * FROM `updatetables`")
+    cur.execute( "CREATE %s SELECT * FROM `updatetables`"%(c))
+    # cur.execute( "DELETE FROM 'updatetables'")
+    # cur.execute( "CREATE TABLE 'updatetables' SELECT * FROM %s"%(d))
     cur.execute('''SELECT * FROM %s'''%d)
     rv=cur.fetchall()
     print("ceate table succeully")
@@ -209,7 +220,7 @@ def refreshbutton():
 
       
       
-  return render_template('admin.html',dt=dt,rv=rv,rv2=rv2)
+  return render_template('admin.html',dt=dt,rv=rv)
      #    cur.execute('''SELECT * FROM %s'''%d)
      #    dt=now
 
@@ -251,8 +262,8 @@ def refresh():
     
 
     cur = mysql.connection.cursor()
-    cur.execute('''SELECT * FROM %s'''%e)
-    dt=now1
+    cur.execute("SELECT * FROM `updatetables`")
+    dt=now
     print(2)
     rv=cur.fetchall()
 
@@ -313,6 +324,7 @@ def update12():
   MAX_PRICE=request.args.get('MAX_PRICE')
   MODAL_PRICE=request.args.get('MODAL_PRICE')
   UNITY_OF_PRICE=request.args.get('name6')
+  DATE=request.args.get('name7')
   ID=request.args.get('ID')
   print("detalies")
   print(DISTRICT,MARKET,COMMODITY,VARIETY,UNITS,MIN_PRICE,MAX_PRICE,MODAL_PRICE,UNITY_OF_PRICE,ID)
@@ -331,6 +343,7 @@ def update12():
 
   cur=mysql.connection.cursor()
   cur.execute("UPDATE `%s` SET `MAX_PRICE`=%s,`MIN_PRICE`=%s,`MODAL_PRICE`=%s WHERE `ID`=%s "%(d,MAX_PRICE,MIN_PRICE,MODAL_PRICE,c))
+  cur.execute("UPDATE `updatetables` SET `MAX_PRICE`=%s,`MIN_PRICE`=%s,`MODAL_PRICE`=%s WHERE `ID`=%s "%(MAX_PRICE,MIN_PRICE,MODAL_PRICE,c))
   # cur.execute("UPDATE `%s` SET `ID`=`%s`,`DISTRICT`=`%s`,`MARKET`=`%s`,`COMMODITY`=`%s`,`VARIETY`=`%s`,`UNITS`=`%s`,`MIN_PRICE`=`%s`,`MAX_PRICE`=`%s`,`MODAL_PRICE`=`%s`,`UNITY_OF_PRICE`=`%s` WHERE `ID`=%s"%(d,ID,DISTRICT,MARKET,COMMODITY,VARIETY,UNITS,MIN_PRICE,MAX_PRICE,MODAL_PRICE,UNITY_OF_PRICE,c))
 # UPDATE `mark_prices20180106` SET `ID`=ID,`DISTRICT`=DISTRICT,`MARKET`=MARKET,`COMMODITY`=COMMODITY,`VARIETY`=VARIETY,`UNITS`=UNITS,`MIN_PRICE`=MIN_PRICE,`MAX_PRICE`=MAX_PRICE,`MODAL_PRICE`=MODAL_PRICE,`UNITY_OF_PRICE`=UNITY_OF_PRICE WHERE `ID`=ID
 # UPDATE `mark_prices20180106` SET `ID`=`%s`,`DISTRICT`=`%s`,`MARKET`=`%s`,`COMMODITY`=`%s`,`VARIETY`=`%s`,`UNITS`=`%s`,`MIN_PRICE`=`%s`,`MAX_PRICE`=`%s`,`MODAL_PRICE`=`%s`,`UNITY_OF_PRICE`=`%s` WHERE `ID`=`%s`

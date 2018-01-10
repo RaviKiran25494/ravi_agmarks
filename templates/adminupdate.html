@@ -5,7 +5,7 @@
 <center><button><a class="btn btn-warning" href="/refreshbutton">Reresh</a></button></center>
 <div>
 	<center><h1>Market-Prices</h1></center>
-  <center><h1>Date::{{dt}}</h1></center>
+  <center><h1>last updated-Prices</h1></center>
 <style>
 table, th, td {
     border: 3px solid black;
@@ -25,6 +25,7 @@ table, th, td {
    	<th><center>MAX_PRICE</center></th>
    	<th><center>MODAL_PRICE</center></th>
    	<th><center>UNITY_OF_PRICE</center></th>
+    <th><center>DATE</center></th>
    
 <!--     <center><th>UPDATA</th></center>
     <center><th>DELECT</th></center> -->
@@ -41,7 +42,7 @@ table, th, td {
     <td><center><b>{{x['MAX_PRICE']}}</b></center></td>
     <td><center><b>{{x['MODAL_PRICE']}}</b></center></td>
     <td><center><b>{{x['UNITY_OF_PRICE']}}</b></center></td>
-    
+    <td><center><b>{{x['DATE']}}</b></center></td>
   </tr>
   {% endfor %}
 </table></center>
