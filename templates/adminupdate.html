@@ -1,0 +1,51 @@
+{% extends 'layout.html' %}
+
+{% block body %}
+<br><br>
+<center><button><a class="btn btn-warning" href="/refreshbutton">Reresh</a></button></center>
+<div>
+	<center><h1>Market-Prices</h1></center>
+  <center><h1>Date::{{dt}}</h1></center>
+<style>
+table, th, td {
+    border: 3px solid black;
+    border-collapse: collapse;
+
+}
+</style>
+	<center><table style="width:70%">
+  <tr>
+    <th><center>ID</center></th>    
+    <th><center>DISTRICT</center></th>    
+    <th><center>MARKET</center></th>
+    <th><center>COMMODITY</center></th>    
+    <th><center>VARIETY</center></th>    
+    <th><center>UNITS</center></th>
+   	<th><center>MIN_PRICE</center></th>
+   	<th><center>MAX_PRICE</center></th>
+   	<th><center>MODAL_PRICE</center></th>
+   	<th><center>UNITY_OF_PRICE</center></th>
+   
+<!--     <center><th>UPDATA</th></center>
+    <center><th>DELECT</th></center> -->
+  </tr>  
+  {% for x in rv%}
+  <tr>
+    <td><center><b>{{x['ID']}}</b></center></td>
+    <td><center><b>{{x['DISTRICT']}}</b></center></td>
+    <td><center><b>{{x['MARKET']}}</b></center></td>
+    <td><center><b>{{x['COMMODITY']}}</b></center></td>  
+    <td><center><b>{{x['VARIETY']}}</b></center></td>
+    <td><center><b>{{x['UNITS']}}</b></center></td>
+    <td><center><b>{{x['MIN_PRICE']}}</b></center></td>
+    <td><center><b>{{x['MAX_PRICE']}}</b></center></td>
+    <td><center><b>{{x['MODAL_PRICE']}}</b></center></td>
+    <td><center><b>{{x['UNITY_OF_PRICE']}}</b></center></td>
+    
+  </tr>
+  {% endfor %}
+</table></center>
+</div>
+
+{% endblock %}
+ss

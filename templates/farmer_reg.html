@@ -1,0 +1,212 @@
+{% extends 'layout.html' %}
+
+{% block body %}
+   <div class="container-fluid">
+  
+  <div class="row">
+    <div class="col-sm-3" style="background-color:lavender;"></div>
+    <!-- <div class="col-sm-4" style="background-color:lavenderblush;">.col-sm-4</div>
+    <div class="col-sm-4" style="background-color:lavender;">.col-sm-4</div> -->
+  <div class="col-sm-6" style="background-color:lavender;">
+  <div class="form-group">
+           <center><h1>Register1</h1></center>
+       </div>
+
+   {% from "includes/_formhelper.html" import render_field %}
+
+   <form method="POST" action="/register" class="w3-cell w3-padding-large w3-card-4 w3-light-grey w3-text-black">
+   {{ form.csrf_token }}
+        <div class="w3-panel w3-border w3-border-indigo w3-hover-border-orange">
+            <h2 class="w3-center w3-panel w3-indigo">FARMER REGISTRATION</h2>
+ 
+        <div class="w3-row w3-section">
+            <div class="w3-col" style="width:50px"><i class="w3-xxlarge fa fa-user"></i></div>
+                <div class="w3-rest">
+                {{render_field(form.first_name, class_="w3-input w3-border",)}}
+                </div>
+        </div>
+
+        <div class="w3-row w3-section">
+            <div class="w3-col" style="width:50px"><i class="w3-xxlarge fa fa-user"></i></div>
+                <div class="w3-rest">
+                {{render_field(form.last_name1, class_="w3-input w3-border",)}}
+                </div>
+        </div>
+        <div class="w3-row w3-section">
+          <div class="w3-col" style="width:50px"><i class="w3-xxlarge fa fa-calendar"></i></div>
+            <div class="w3-rest">
+              {{render_field(form.dt, class_="form-control w3-border",id_="exampleInputDOB1",)}}
+            </div>
+        </div>
+        <div class="w3-row w3-section">
+        <div class="w3-col" style="width:50px"><i class="w3-xxlarge fa fa-envelope-o"></i></div>
+          <div class="w3-rest">
+            {{render_field(form.email, class_="w3-input w3-border")}}
+          </div>
+        </div>
+        <div class="w3-row w3-section">
+        <div class="w3-col" style="width:50px"><i class="w3-xxlarge fa fa-phone"></i></div>
+          <div class="w3-rest">
+            {{render_field(form.mobile, class_="w3-input w3-border")}}
+          </div>
+        <div class="w3-row w3-section">
+          <div class="w3-col" style="width:50px"><i class="w3-xxlarge fa fa-pencil"></i></div>
+            <div class="w3-rest">
+                {{render_field(form.aadher_number, class_="w3-input w3-border")}}
+            </div>
+        </div>
+        
+        <div class="w3-row w3-section">
+  
+         <p class="w3-large"> <i class="w3-large fa fa-check-square-o"></i>&nbsp;Select your Crop Type</p>
+          <div class="checkbox-inline">
+            <label class="checkbox-inline">
+            <input type="checkbox" value="">&nbsp;Paddy
+          </label>&nbsp;
+          <label class="checkbox-inline">
+            <input type="checkbox" value="">&nbsp;Wheat
+          </label>&nbsp;
+          <label class="checkbox-inline">
+            <input type="checkbox" value="">&nbsp;Cotton
+          </label>&nbsp;
+          <label class="checkbox-inline">
+            <input type="checkbox" value="">&nbsp;Mirchi
+          </label>&nbsp;
+          <label class="checkbox-inline">
+            <input type="checkbox" value="">&nbsp;Vegetables
+          </label>
+          
+          </div>
+        </div>
+        <div class="w3-row w3-section">
+  
+         <p class="w3-large"><i class="w3-large fa fa-check-square-o"></i>&nbsp;Select your Animal Husbandry Type</p>
+          <div class="checkbox-inline">
+            <label class="checkbox-inline">
+            <input type="checkbox" value="">&nbsp;Cattle
+          </label>&nbsp;
+          <label class="checkbox-inline">
+            <input type="checkbox" value="">&nbsp;Fish
+          </label>&nbsp;
+          <label class="checkbox-inline">
+            <input type="checkbox" value="">&nbsp;Poultry
+          </label>&nbsp;
+          <label class="checkbox-inline">
+            <input type="checkbox" value="">&nbsp;Goat
+          </label>&nbsp;
+          <label class="checkbox-inline">
+            <input type="checkbox" value="">&nbsp;Sheep
+          </label>
+          
+          </div>
+        </div>
+        <div class="w3-row w3-section">
+  
+         <p class="w3-large"><i class="w3-large fa fa-check-square-o"></i>&nbsp;Select your Dairy Farming</p>
+          <div class="checkbox-inline">
+            <label class="checkbox-inline">
+            <input type="checkbox" value="">&nbsp;Milk
+          </label>&nbsp;
+          <label class="checkbox-inline">
+            <input type="checkbox" value="">&nbsp;Ghee
+          </label>&nbsp;
+          <label class="checkbox-inline">
+            <input type="checkbox" value="">&nbsp;Butter
+          </label>&nbsp;
+          <label class="checkbox-inline">
+            <input type="checkbox" value="">&nbsp;Cheese
+          </label>&nbsp;
+          <label class="checkbox-inline">
+            <input type="checkbox" value="">&nbsp;Milk Powder
+          </label>
+          
+          </div>
+        </div>
+
+          <div class="w3-row w3-section">
+            <div class="w3-col" style="width:50px"></div>
+              <div class="w3-rest">
+                {{render_field(form.address, class_="w3-input w3-border")}}
+              </div>
+          </div>
+
+          <div class="w3-row w3-section">
+              <div class="w3-rest">
+                {{render_field(form.stata, class_="form-control")}}
+               </div> 
+          </div>
+
+          <div class="w3-row w3-section">
+              <div class="w3-rest">
+                {{render_field(form.districtand, class_="form-control")}}
+               </div> 
+          </div>
+          <div class="w3-row w3-section">
+          <div class="w3-rest">
+                {{render_field(form.Village, class_="form-control")}}
+           </div> 
+          </div>
+          <div class="w3-row w3-section">
+          <div class="w3-rest">
+                {{render_field(form.Taluka, class_="form-control")}}
+           </div> 
+          </div>
+          <div class="w3-row w3-section">
+          <div class="w3-rest">
+            {{render_field(form.Pincode, class_="form-control")}}
+           </div> 
+          </div>
+          <div class="w3-row w3-section">
+          <div class="w3-rest">
+            {{render_field(form.photo, class_="form-control")}}
+           </div> 
+          </div>
+          <div class="w3-row w3-section">
+          <div class="w3-rest">
+          
+          {{ form.example }}
+          </div> 
+          </div>
+
+        <div class="w3-row w3-section">
+      <div class="w3-rest">
+      <div class="input-group image-preview">
+                    <span class="input-group-btn">
+                    <!-- image-preview-clear button -->
+                    <button type="button" class="btn btn-default image-preview-clear" style="display:none;">
+                      Clear
+                    </button>
+                    <!-- image-preview-input -->
+                    <div class="btn btn-default image-preview-input">
+                       <i class="fa fa-folder-open-o" aria-hidden="true"></i>
+                        <span class="image-preview-input-title"></span>
+                        <input type="file" accept="image/png, image/jpeg, image/gif" name="input-file-preview"/> <!-- rename it -->
+                    </div>
+                </span>
+            </div></div></div>
+
+<button class="w3-button w3-block w3-section w3-black ">Register</button>
+</div>
+</form>
+{% endblock %}
+
+       <!-- <div class="form-group">
+           {{render_field(form.name, class_="form-control")}}
+       </div>
+       <div class="form-group">
+           {{render_field(form.mobile, class_="form-control")}}
+       </div>
+       <div class="form-group">
+           {{render_field(form.email, class_="form-control")}}
+       </div>
+       <div class="form-group">
+           {{render_field(form.course, class_="form-control")}}
+       </div>
+       
+       <p><input type="submit" class="btn btn-primary" value="Submit"></p>
+   </form>
+   </div>
+   <div class="col-sm-3" style="background-color:lavender;"></div>
+   </div>
+</div> -->
+

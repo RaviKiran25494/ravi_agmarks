@@ -1,0 +1,116 @@
+{% extends 'layout1.html' %}
+
+{% block body %}
+{% from "includes/_formhelper.html" import render_field %}
+  <form method="POST" action="" class="w3-cell w3-padding-large w3-card-4 w3-light-grey w3-text-black">
+    <div class="w3-panel w3-border w3-border-indigo w3-hover-border-orange">
+      <h2 class="w3-center w3-panel w3-indigo w3-padding" style="font-size:2rem; font-weight:600">STORAGE / WAREHOUSE<br>REGISTRATION</h2>
+      <div class="w3-row w3-section">
+        <div class="w3-col" style="width:50px"><i class="w3-xxlarge fa fa-user"></i></div>
+          <div class="w3-rest">
+            {{render_field(form.fullname, class_="w3-input w3-border", placeholder="Full Name")}}
+          </div>
+      </div>
+      <div class="w3-row w3-section">
+        <div class="w3-col" style="width:50px"><i class="w3-xxlarge fa fa-id-badge" ></i></div>
+          <div class="w3-rest">
+            {{render_field(form.companyname, class_="w3-input w3-border", placeholder="Company Name")}}
+          </div>
+      </div>
+      <div class="w3-row w3-section">
+        <div class="w3-rest">
+          {{render_field(form.companyaddress, class_="w3-input w3-border", placeholder="Write Your Address here")}}
+        </div>
+      </div>
+      <div class="w3-row w3-section">
+        <div class="w3-rest">
+          {{render_field(form.state, class_="w3-select")}}
+        </div>
+      </div>
+      <div class="w3-row w3-section">
+        <div class="w3-rest">
+          {{render_field(form.district, class_="w3-select")}}
+        </div>
+      </div>    
+      <div class="w3-row w3-section">
+        <div class="w3-rest">
+          {{render_field(form.village, class_="w3-input w3-border", placeholder="Village")}}
+        </div>
+      </div>       
+      <div class="w3-row w3-section">
+        <div class="w3-rest">
+          {{render_field(form.taluka, class_="w3-input w3-border", placeholder="Taluka")}}
+        </div>
+      </div>
+      <div class="w3-row w3-section">
+        <div class="w3-rest">
+          {{render_field(form.pincode, class_="w3-input w3-border", placeholder="Pincode")}}
+        </div>
+      </div>
+      <div class="w3-row w3-section">
+        <div class="w3-col" style="width:50px"><i class="w3-xxlarge fa fa-phone"></i></div>
+        <div class="w3-rest">
+          {{render_field(form.contactnumber, class_="w3-input w3-border", placeholder="Contact Number")}}
+        </div>
+      </div>
+      <div class="w3-row w3-section">
+        <div class="w3-col" style="width:50px"><i class="w3-xxlarge fa fa-envelope-o"></i></div>
+        <div class="w3-rest">
+          {{render_field(form.email, class_="w3-input w3-border", placeholder="Email")}}
+        </div>
+      </div>
+      <div class="w3-row w3-section">
+        <div class="w3-rest">
+          {{render_field(form.yearofIncorporation, class_="w3-input w3-border")}}
+        </div>
+      </div>
+      <div class="w3-row w3-section">
+        <div class="w3-col" style="width:50px"><i class="w3-xxlarge fa fa-pencil"></i></div>
+        <div class="w3-rest">
+          {{render_field(form.gstnumber, class_="w3-input w3-border", placeholder="GST Number of the Company(Optional)")}}
+        </div>
+      </div>
+      <div class="w3-row w3-section">
+         <p class="w3-large"> <i class="w3-large fa fa-check-square-o"></i>&nbsp;Raw Material He Stores</p>
+         <div class="checkbox-inline">
+          <div class="checkbox checkbox-primary">
+            {{render_field(form.materialstores, class_="checkbox-inline")}}
+           <!-- <label class="checkbox-inline">
+            <input type="checkbox" value="">&nbsp;Paddy</label>&nbsp;
+            <label class="checkbox-inline">
+            <input type="checkbox" value="">&nbsp;Wheat
+            </label>&nbsp;
+            <label class="checkbox-inline">
+            <input type="checkbox" value="">&nbsp;Cotton
+            </label>&nbsp;
+            <label class="checkbox-inline">
+            <input type="checkbox" value="">&nbsp;Mirchi
+            </label>&nbsp;
+            <label class="checkbox-inline">
+            <input type="checkbox" value="">&nbsp;Vegetables
+            </label> -->
+          </div>
+        </div>
+      </div>
+    <div class="w3-row w3-section">
+      <div class="w3-rest">
+        <div class="w3-container list-inline">
+          <span class="w3-left" style="padding-left: 5px;">
+            {{render_field(form.storagecapacity, class_="w3-input w3-border", placeholder="Storage Capacity", style="width: 150px;")}}
+          </span>
+          <span class="w3-margin-right">
+            {{render_field(form.quantity, class_="w3-select w3-border", style="width: 150px;")}}
+          </span>
+        </div>
+      </div>
+    </div>
+    <div class="w3-row w3-section">
+      <div class="w3-col" style="width:50px"><i class="w3-xxlarge fa fa-phone"></i></div>
+        <div class="w3-rest">
+          {{render_field(form.confirmcontactnumber, class_="w3-input w3-border", placeholder="Confirm your Mobile Number")}}
+        </div>
+      </div>
+      <button class="w3-button w3-block w3-section w3-black ">Register</button>
+    </div>
+  </form>
+{% endblock %}

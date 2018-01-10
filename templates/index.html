@@ -1,0 +1,448 @@
+<!-- <!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+		<meta name="description" content="">
+		<meta name="author" content="ASTONA 1">
+		<meta name="viewport" content="width=device-width; initial-scale=1.0">
+		<title>Welcome to AGMARKS - Agri Global Market</title>
+		<link rel="shortcut icon" href="images/favicon.ico">
+		<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+    <link href="styles/bootstrap.min.css" rel="stylesheet">
+    <link href="styles/style.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700" rel="stylesheet">
+     <link rel="stylesheet" href="styles/w3.css">
+    <link rel="stylesheet" type="text/css" href="styles/fontello.css">
+    <link href="styles/font-awesome.min.css" rel="stylesheet">
+    	<script src="scripts/jquery.min.js" type="text/javascript"></script>
+    <script src="scripts/bootstrap.min.js" type="text/javascript"></script>
+    <script src="scripts/navigation.js" type="text/javascript"></script>
+    <script src="scripts/menumaker.js" type="text/javascript"></script>
+    <script type="text/javascript" src="scripts/jquery.sticky.js"></script>
+    <script type="text/javascript" src="scripts/sticky-header.js"></script>
+    <script src="https://www.w3schools.com/lib/w3.js"></script>
+    <script type="text/javascript" src="scripts/login.js"></script> -->
+
+{% extends 'layout.html' %}
+
+{% block body %}
+<body>
+   <!--Header Section-->
+    <div class="pdb15" id="header"></div>
+      <!--Header Section Close-->
+        <!--Body Section-->
+        <div class="container-fluid">
+        <!--Row 1 Section-->
+              <div class="w3-row pdt10">
+              <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12 pdb15">
+                  <div class="w3-card">
+                        <header class="w3-container w3-theme w3-center">
+                        <h3 class="w3-text-white">Weather Forecast</h3>
+                      </header>
+                        <div>&nbsp;</div>
+<a class="weatherwidget-io" href="https://forecast7.com/en/17d3978d49/hyderabad/" data-label_1="HYDERABAD" data-label_2="WEATHER" data-font="Roboto Slab" data-theme="pure">HYDERABAD WEATHER</a>
+<script>
+!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="https://weatherwidget.io/js/widget.min.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","weatherwidget-io-js");
+</script>
+</div>        
+                  </div>
+                  <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12 pdb15">
+                    
+                    <div class="w3-card-4 w3-border w3-border-deep-orange" style="overflow:hidden; background-image:url(images/bg2.svg);">
+                      <header class="w3-container w3-theme w3-center">
+                        <h3 class="w3-text-white">Login</h3>
+                      </header>
+
+       <form class="w3-container" action="/action_page.php">
+        <div class="w3-section">
+          <input class="w3-input w3-border w3-margin-bottom w3-opacity-min" type="text" placeholder="Enter Username" name="usrname" required>
+          <input class="w3-input w3-border w3-opacity-min" type="password" placeholder="Enter Password" name="psw" required>
+          <button class="w3-button w3-block w3-section w3-themeo-d1 w3-text-white w3-hover-theme" type="submit">Login</button>
+         </div>
+      </form>
+
+      <div class="w3-container w3-border-top w3-padding w3-light-gray list-inline">
+              <span class="w3-left w3-small"> New User: <a href="#"><strong class="w3-serif w3-green w3-button">Sign Up</strong></a></span>
+        <span class="w3-right w3-small"><a href="#" class="w3-serif w3-dark-gray w3-button">Forgot password?</a></span>
+      </div>
+      </div>
+      </div>
+
+                  <div class="col-lg-5 col-md-5 col-sm-12 col-xs-12 pdb15">
+                      <div class="w3-card">
+                        <header class="w3-container w3-theme w3-center">
+                        <h3 class="w3-text-white">Registration</h3>
+                      </header>
+                              <div id="farmreg" class="w3-modal" style="z-index:2000;">
+    <div class="w3-modal-content w3-card-4 w3-animate-zoom" style="max-width:550px">
+      <div class="w3-container w3-light-grey"><br>
+        <span onclick="document.getElementById('farmreg').style.display='none'" class="w3-button w3-xlarge w3-transparent w3-display-topright" title="Close Modal">×</span>
+              <div id="farmregi">
+      </div>
+
+      </div>
+      <script>
+</script>
+    </div>
+  </div>
+
+  <div class="w3-container">
+    <div class="w3-row pdt10 w3-mobile">
+      <div class="col-md-6 col-sm-6 col-xs-12 w3-themeo w3-button w3-margin-bottom w3-display-container">
+      <div class="w3-padding w3-section" id='farmer_model' data-toggle="modal" data-target="#myModal">
+        <img class="w3-display-left pdl20" src="{{ url_for('static', filename='images/farmt.svg') }}" width="30%" >
+        <b class="w3-large w3-display-middle pdl10" style="font-weight:bold;">Farmers</b>
+        </div>
+      </div>
+      <div class="col-md-6 col-sm-6 col-xs-12 w3-themeo w3-button w3-margin-bottom w3-display-container">
+        <div class="w3-padding w3-section" id="food_model" data-toggle="modal" data-target="#myModal">
+          <img class="w3-display-left pdl20" src="{{ url_for('static', filename='images/farmt.svg') }}" width="30%" >
+          <b class="w3-large w3-display-middle pdl20 w3-text-white" style="font-weight:bold;">Processors</b>
+        </div>
+      </div>
+    </div>
+    <div class="w3-row w3-mobile">
+      <div class="col-md-6 col-sm-6 col-xs-12 w3-themeo w3-button w3-margin-bottom w3-display-container">
+        <div class="w3-padding w3-section" id="warehouse_model" data-toggle="modal" data-target="#myModal">
+          <img class="w3-display-left pdl20" src="{{ url_for('static', filename='images/farmt.svg') }}" width="30%" >
+          <b class="w3-large w3-display-middle" style="font-weight:bold;">Storage</b>
+        </div>
+      </div>
+      <div class="col-md-6 col-sm-6 col-xs-12 w3-themeo w3-button w3-margin-bottom w3-display-container">
+        <div class="w3-padding w3-section" id="trader_model" data-toggle="modal" data-target="#myModal">
+          <img class="w3-display-left pdl20" src="{{ url_for('static', filename='images/farmt.svg') }}" width="30%" >
+          <b class="w3-large w3-display-middle" style="font-weight:bold;">Traders</b>
+        </div>
+      </div>
+    </div>
+    <div class="w3-row w3-mobile">
+      <div class="col-md-6 col-sm-6 col-xs-12 w3-themeo w3-button w3-margin-bottom w3-display-container">
+        <div class="w3-padding w3-section" id="trader_model" data-toggle="modal" data-target="#myModal">
+          <img class="w3-display-left pdl20" src="{{ url_for('static', filename='images/farmt.svg') }}" width="30%" >
+          <b class="w3-large w3-display-middle pdl10" style="font-weight:bold;">Suppliers</b></div>
+        </div>
+      <div class="col-md-6 col-sm-6 col-xs-12 w3-themeo w3-button w3-margin-bottom w3-display-container">
+        <div class="w3-padding w3-section" id="trader_model" data-toggle="modal" data-target="#myModal">
+          <img class="w3-display-left pdl20" src="{{ url_for('static', filename='images/farmt.svg') }}" width="30%" >
+          <b class="w3-large w3-display-middle pdl10" style="font-weight:bold;">Logistics</b></div>
+        </div>
+      </div>
+
+                      </div>                   
+                    </div>
+                </div>
+        <!--Row 1 Section Close--> 
+        <!--Row 2 Section-->
+        <style>
+          table, th, td {
+              border: 3px solid black;
+              border-collapse: collapse;
+              font-size: 0.7rem;
+              color: #000;
+
+          }
+        </style>
+        <div class="w3-row">
+        	<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 pdb15 pdt15">
+            <div class="w3-card">
+              <header class="w3-container w3-theme w3-center">
+                <h3 class="w3-text-white ">Market Prices</h3>
+              </header>
+              <div class="w3-section">
+                <div class="w3-row pdb15 pdt15 w3-mobile" style="overflow-y:scroll; height:250px; margin-top:5px;">
+ 							    <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                     <div class="table-responsive">
+                      <center><h4>Date::{{dt}}</h4></center>
+                    
+                      <center><table style="width:100%" class="table w3-mobile">
+                      <tr>
+                        
+                        <th><center>COMMODITY</center></th> 
+                        <th><center>MIN_PRICE</center></th>
+                        <th><center>MAX_PRICE</center></th>
+                        <th><center>MODAL_PRICE</center></th>
+                        
+                        
+                    <!--     <center><th>UPDATA</th></center>
+                        <center><th>DELECT</th></center> -->
+                      </tr>  
+                      <tr>
+                        <td><center><b>{{paddy[0]['COMMODITY']}}</b></center></td>  
+                        <td><center><b>{{paddy[0]['MIN_PRICE']}}</b></center></td>
+                        <td><center><b>{{paddy[0]['MAX_PRICE']}}</b></center></td>
+                        <td><center><b>{{paddy[0]['MODAL_PRICE']}}</b></center></td>
+                      </tr>
+                      <tr>
+                        <td><center><b>{{groundnut[0]['COMMODITY']}}</b></center></td>  
+                        <td><center><b>{{groundnut[0]['MIN_PRICE']}}</b></center></td>
+                        <td><center><b>{{groundnut[0]['MAX_PRICE']}}</b></center></td>
+                        <td><center><b>{{groundnut[0]['MODAL_PRICE']}}</b></center></td>
+                      </tr>
+                      <tr>
+                        <td><center><b>{{Chillies[0]['COMMODITY']}}</b></center></td>  
+                        <td><center><b>{{Chillies[0]['MIN_PRICE']}}</b></center></td>
+                        <td><center><b>{{Chillies[0]['MAX_PRICE']}}</b></center></td>
+                        <td><center><b>{{Chillies[0]['MODAL_PRICE']}}</b></center></td>
+                      </tr>
+                      <tr>
+                        <td><center><b>{{cotton[0]['COMMODITY']}}</b></center></td>  
+                        <td><center><b>{{cotton[0]['MIN_PRICE']}}</b></center></td>
+                        <td><center><b>{{cotton[0]['MAX_PRICE']}}</b></center></td>
+                        <td><center><b>{{cotton[0]['MODAL_PRICE']}}</b></center></td>
+                      </tr>
+                      <tr>
+                        <td><center><b>{{tamarindfruit[0]['COMMODITY']}}</b></center></td>  
+                        <td><center><b>{{tamarindfruit[0]['MIN_PRICE']}}</b></center></td>
+                        <td><center><b>{{tamarindfruit[0]['MAX_PRICE']}}</b></center></td>
+                        <td><center><b>{{tamarindfruit[0]['MODAL_PRICE']}}</b></center></td>
+                      </tr>
+
+                    </table></center>
+                    </div>
+ 							    </div>
+                  <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12 table-responsive">
+                    
+
+                    <div class="table-responsive">
+                      <center><h4>Date::{{dt}}</h4></center>
+                    
+                      <center><table style="width:100%" class='table w3-mobile'>
+                      <tr>
+                        
+                        <th><center>COMMODITY</center></th> 
+                        <th><center>MIN_PRICE</center></th>
+                        <th><center>MAX_PRICE</center></th>
+                        <th><center>MODAL_PRICE</center></th>
+                        
+                        
+                    <!--     <center><th>UPDATA</th></center>
+                        <center><th>DELECT</th></center> -->
+                      </tr>  
+                      <tr>
+                        <td><center><b>{{banana[0]['COMMODITY']}}</b></center></td>  
+                        <td><center><b>{{banana[0]['MIN_PRICE']}}</b></center></td>
+                        <td><center><b>{{banana[0]['MAX_PRICE']}}</b></center></td>
+                        <td><center><b>{{banana[0]['MODAL_PRICE']}}</b></center></td>
+                      </tr>
+                      <tr>
+                        <td><center><b>{{Coconut[0]['COMMODITY']}}</b></center></td>  
+                        <td><center><b>{{Coconut[0]['MIN_PRICE']}}</b></center></td>
+                        <td><center><b>{{Coconut[0]['MAX_PRICE']}}</b></center></td>
+                        <td><center><b>{{Coconut[0]['MODAL_PRICE']}}</b></center></td>
+                      </tr>
+                      <tr>
+                        <td><center><b>{{tomato[0]['COMMODITY']}}</b></center></td>  
+                        <td><center><b>{{tomato[0]['MIN_PRICE']}}</b></center></td>
+                        <td><center><b>{{tomato[0]['MAX_PRICE']}}</b></center></td>
+                        <td><center><b>{{tomato[0]['MODAL_PRICE']}}</b></center></td>
+                      </tr>
+                      <tr>
+                        <td><center><b>{{Onion[0]['COMMODITY']}}</b></center></td>  
+                        <td><center><b>{{Onion[0]['MIN_PRICE']}}</b></center></td>
+                        <td><center><b>{{Onion[0]['MAX_PRICE']}}</b></center></td>
+                        <td><center><b>{{Onion[0]['MODAL_PRICE']}}</b></center></td>
+                      </tr>
+                      <tr>
+                        <td><center><b>{{Papaya[0]['COMMODITY']}}</b></center></td>  
+                        <td><center><b>{{Papaya[0]['MIN_PRICE']}}</b></center></td>
+                        <td><center><b>{{Papaya[0]['MAX_PRICE']}}</b></center></td>
+                        <td><center><b>{{Papaya[0]['MODAL_PRICE']}}</b></center></td>
+                      </tr>
+
+                    </table></center>
+                    </div>
+ 							    </div>
+                  <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12 table-responsive">
+                    <div class="table-responsive">
+                      <center><h4>Date::{{dt}}</h4></center>
+                    
+                      <center><table style="width:100%" class='table'>
+                      <tr>
+                        
+                        <th><center>COMMODITY</center></th> 
+                        <th><center>MIN_PRICE</center></th>
+                        <th><center>MAX_PRICE</center></th>
+                        <th><center>MODAL_PRICE</center></th>
+                        
+                        
+                    <!--     <center><th>UPDATA</th></center>
+                        <center><th>DELECT</th></center> -->
+                      <tr>
+                        <td><center><b>MILK(1lt)</b></center></td>  
+                        <td><center><b>50</b></center></td>
+                        <td><center><b>55</b></center></td>
+                        <td><center><b>52</b></center></td>
+                      </tr>
+                      <tr>
+                        <td><center><b>Ghee(1lt)</b></center></td>  
+                        <td><center><b>450</b></center></td>
+                        <td><center><b>500</b></center></td>
+                        <td><center><b>500</b></center></td>
+                      </tr>
+                      <tr>
+                        <td><center><b>Butter(200gm)</b></center></td>  
+                        <td><center><b>60</b></center></td>
+                        <td><center><b>66</b></center></td>
+                        <td><center><b>65</b></center></td>
+                      </tr>
+                      <tr>
+                        <td><center><b>Curd</b></center></td>  
+                        <td><center><b>75</b></center></td>
+                        <td><center><b>85</b></center></td>
+                        <td><center><b>80</b></center></td>
+                      </tr>
+                      <tr>
+                        <td><center><b>Paneer(200 gm) </b></center></td>  
+                        <td><center><b>66</b></center></td>
+                        <td><center><b>82</b></center></td>
+                        <td><center><b>81</b></center></td>
+                      </tr>
+
+                    </table></center>
+                    </div>
+ 							    </div>
+               </div>
+       		   </div>        
+            </div>                   
+        	</div>
+        </div>
+        <!--Row 2 Section Close--> 
+        <!--Row 3 Section-->
+        	   <div class="w3-row pdt10">
+	        		<div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 pdb15">
+    	         <div class="w3-card w3-center">
+                  <header class="w3-container w3-theme w3-center">
+                    <h3 class="w3-text-white ">Our Channel YouTube</h3>
+                  </header>
+                  <div class="w3-container">
+                    <div class="w3-row pdb15 pdt15 w3-mobile">
+ 									    <div class="col-md-4 w3-transparent w3-dropdown-hover w3-hover-none">
+		 							    </div>
+                      <div class="col-md-4 w3-transparent w3-dropdown-hover w3-hover-none">
+		 							    </div>
+                      <div class="col-md-4 w3-transparent w3-dropdown-hover w3-hover-none">
+		 							    </div>
+                    </div>
+                    <div class="w3-row pdb15 pdt15 w3-mobile">
+ 							 		   <div class="col-md-4 w3-transparent w3-dropdown-hover w3-hover-none">
+ 									   </div>
+                     <div class="col-md-4 w3-transparent w3-dropdown-hover w3-hover-none">
+ 							 		   </div>
+                     <div class="col-md-4 w3-transparent w3-dropdown-hover w3-hover-none">
+ 							 		   </div>
+	                  </div>
+							   </div>
+				       </div>        
+        	   </div>
+
+          <!--               Open News Feed     -->   
+          <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+            <div class="w3-card">
+                <header class="w3-container w3-theme w3-center">
+                    <h3 class="w3-text-white ">News Feed</h3>
+                  </header>
+
+                  <div class="w3-section" style="overflow-y:scroll; height:200px; margin-top:-20px;">
+                  {% for b in range(0,a1)%}
+                    <div class="w3-row w3-mobile">
+                      
+                        <div class="col-md-4 col-sm-4 col-xs-4 ">
+                          <img class="w3-left" src="{{l[b]['product_image']}}" style="vertical-align:middle; margin-top:15px;" width="100%" height="100%">
+                        </div>
+                        <div class="col-md-8 col-sm-8 col-xs-8 w3-left-align">
+                          <h5 class="w3-text-blue">{{l[b]['product_name12']}}</h5>
+                          <h6 class="w3-small">{{l[b]['product_time']}}</h6>
+                          <p class="w3-medium">{{l[b]['product_desc']}}</p>
+                        </div>
+                    </div>
+                    <hr>
+                  {% endfor %}
+
+                   </div>
+            </div>                   
+          </div>
+<!--               Close News Feed      -->  
+                </div>
+        <!--Row 3 Section Close-->  
+        </div>
+        <!--Body Section Close-->
+        <!--Footer Section-->
+		<div class="pdt10" id="footer"></div>
+        <!--Footer Section Close-->
+<!-- popup -->
+<script src="https://code.jquery.com/jquery-1.12.0.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){
+$("#farmer_model").click(function()   
+{  
+  $.get("farmerregistration",function(data){
+    $(".modal-body").html(data);
+    });
+      
+});  
+$("#food_model").click(function()  
+{  
+   $.get("foodprocesserregistration",function(data){
+    $(".modal-body").html(data);
+    });
+        
+});
+$("#warehouse_model").click(function()  
+{  
+   $.get("warehouseregistration",function(data){
+    $(".modal-body").html(data);
+    });
+        
+});
+$("#trader_model").click(function()  
+{  
+   $.get("traderregistration",function(data){
+    $(".modal-body").html(data);
+    });
+        
+});    
+$("#three").click(function()  
+{  
+    $(".container-right").html(p3);  
+});
+
+
+        
+
+}); 
+</script>
+<!-- endpopup -->
+<!-- model- -->
+
+
+
+  <!-- The Modal -->
+   <div class="modal fade" id="myModal">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+      
+        <!-- Modal Header -->
+        <div>
+
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+        </div>
+        
+        <!-- Modal body -->
+        <div class="modal-body">
+          HII this is ravi..........
+        </div>        
+      </div>
+    </div>
+  </div>
+  
+</div>
+<!-- endmodel --> 
+ 
+
+ <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>  
+ <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>  
+
+        
+
+{% endblock %}

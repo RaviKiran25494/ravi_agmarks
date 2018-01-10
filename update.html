@@ -1,0 +1,73 @@
+{% extends 'layout.html' %}
+
+{% block body %}
+<form action="/update12" method='put'>
+<!-- <br><br>
+id:::<br><br>
+name:<br><br>
+price:<input type="text" name='name1' value="{{ person['MAX_PRICE'] }}"><br><br> -->
+<!-- email:<input type="text" name='email' value="{{ person['st_email'] }}"><br><br> -->
+<center><table style="width:70%">
+  <tr>
+    <th><center>ID</center></th> 
+    <td><center><input type="text" name='ID' value="{{ person['ID'] }}"></center></td> 
+  </tr>
+  <tr>  
+    <th><center>DISTRICT</center></th> 
+    <td><center><input type="text" name='name1' value="{{ person['DISTRICT'] }}"></center></td>
+   </tr>
+   <tr>   
+    <th><center>MARKET</center></th> 
+    
+    <td><center><input type="text" name='name2' value="{{ person['MARKET'] }}"></center></td>
+    </tr>
+    <tr>
+    <th><center>COMMODITY</center></th>  
+    
+    <td><center><input type="text" name='name3' value="{{ person['COMMODITY'] }}"></center></td>
+    </tr>
+    <tr>
+    <th><center>VARIETY</center></th>  
+    
+    <td><center><input type="text" name='name4' value="{{ person['VARIETY'] }}"></center></td>
+    </tr>
+    <tr>  
+    <th><center>UNITS</center></th> 
+     
+     <td><center><input type="text" name='name5' value="{{ person['UNITS'] }}"></center></td>
+    </tr>
+    <tr>
+   	<th><center>MIN_PRICE</center></th> 
+   	
+   	<td><center><input type="text" name='MIN_PRICE' value="{{ person['MIN_PRICE'] }}"></center></td>
+   	</tr>
+   	<tr>
+   	<th><center>MAX_PRICE</center></th>
+   	 
+   	 <td><center><input type="text" name='MAX_PRICE' value="{{ person['MAX_PRICE'] }}"></center></td>
+   	 </tr>
+   	 <tr>
+   	 <th><center>MODAL_PRICE</center></th>
+   	 
+   	 <td><center><input type="text" name='MODAL_PRICE' value="{{ person['MODAL_PRICE'] }}"></center></td>
+   	 </tr>
+
+   	 <tr>
+   	<th><center>UNITY_OF_PRICE</center></th> 
+   	 
+   	 <td><center><input type="text" name='name6' value="{{ person['UNITY_OF_PRICE'] }}"></center></td>
+   	 </tr>
+   	 <th></th>
+   	 <br><br>
+   	 <td><center><input type="submit" name='submit' value='submit'></center></td>
+   	 </tr>
+   	 
+    
+<!--     <center><th>UPDATA</th></center>
+    <center><th>DELECT</th></center> -->
+ </table></center> <br><br><br>
+</form> 
+
+</div>
+
+{% endblock %}

@@ -1,0 +1,48 @@
+{% extends 'index.html' %}
+
+{% block body %}
+
+<div>
+	<center><h1>currentstatus</h1></center>
+<style>
+table, th, td {
+    border: 3px solid black;
+    border-collapse: collapse;
+
+}
+</style>
+	<center><table style="width:70%">
+  <tr>
+    <th><center>ID</center></th>
+    
+    <th><center>NAME</center></th>
+    
+    <th><center>MOBILE</center></th>
+    <th><center>EMAIL</center></th>
+    
+    <th><center>COURSE</center></th>
+    
+    <th><center>STATUS</center></th>
+   
+<!--     <center><th>UPDATA</th></center>
+    <center><th>DELECT</th></center> -->
+  </tr>  
+  {% for x in rv%}
+  <tr>
+    <td><center><b>{{x['id']}}</b></center></td>
+    <td><center><b>{{x['st_name']}}</b></center></td>
+    <td><center><b>{{x['st_mobile']}}</b></center></td>
+    <td><center><b>{{x['st_email']}}</b></center></td>  
+    <td><center><b>{{x['st_course']}}</b></center></td>
+   
+    <td><center><b>{{x['st_lead_status']}}</b></center></td>
+    
+    
+
+  </tr>
+  {% endfor %}
+</table></center>
+</div>
+
+
+{% endblock %}

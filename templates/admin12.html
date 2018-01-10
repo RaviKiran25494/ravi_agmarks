@@ -1,0 +1,87 @@
+{% extends 'layout.html' %}
+
+{% block body %}
+<br><br>
+
+<div>
+	<center><h1>Market-Prices</h1></center>
+  <center><h1>Date::{{dt}}</h1></center>
+<style>
+table, th, td {
+    border: 3px solid black;
+    border-collapse: collapse;
+
+}
+</style>
+<script>
+  $(document).ready(function(){ 
+  $.get("update.html", function(data) {
+    $("#update12").html(data);
+    });
+  });
+
+
+</script>
+
+	<center>
+  <div id="update" class="w3-modal" style="z-index: 2000;">
+  <div class="w3-modal-content w3-card w3-animate-zoom" style="max-width: 500px">
+    <div class="w3-container w3-light-grey" id="update12">
+
+    </div>
+    <script type="text/javascript">
+      function myFarmReg() {
+    var x = document.getElementById("update12");
+    if (x.className.indexOf("w3-show") == -1) {
+        x.className += " w3-show";
+    } else { 
+        x.className = x.className.replace(" w3-show", "");
+    }
+}
+    </script>
+    
+  </div>
+    
+  </div>
+  <table style="width:70%">
+  <tr>
+    <th><center>ID</center></th>    
+    <th><center>DISTRICT</center></th>    
+    <th><center>MARKET</center></th>
+    <th><center>COMMODITY</center></th>    
+    <th><center>VARIETY</center></th>    
+    <th><center>UNITS</center></th>
+   	<th><center>MIN_PRICE</center></th>
+   	<th><center>MAX_PRICE</center></th>
+   	<th><center>MODAL_PRICE</center></th>
+   	<th><center>UNITY_OF_PRICE</center></th>
+   	<th><center>UPDATA</center></th>
+<!--     <center><th>UPDATA</th></center>
+    <center><th>DELECT</th></center> -->
+  </tr>  
+  {% for x in rv%}
+  <tr>
+    <td><center><b>{{x['ID']}}</b></center></td>
+    <td><center><b>{{x['DISTRICT']}}</b></center></td>
+    <td><center><b>{{x['MARKET']}}</b></center></td>
+    <td><center><b>{{x['COMMODITY']}}</b></center></td>  
+    <td><center><b>{{x['VARIETY']}}</b></center></td>
+    <td><center><b>{{x['UNITS']}}</b></center></td>
+    <td><center><b>{{x['MIN_PRICE']}}</b></center></td>
+    <td><center><b>{{x['MAX_PRICE']}}</b></center></td>
+    <td><center><b>{{x['MODAL_PRICE']}}</b></center></td>
+    <td><center><b>{{x['UNITY_OF_PRICE']}}</b></center></td>
+    <td onclick="document.getElementById('update').style.display='block'"><center><button >EDIT</button></center></td>
+  </tr>
+  {% endfor %}
+</table></center>
+</div>
+<script>
+document.onkeydown = function(evt){
+  evt = evt || window.event;
+  if(evt.keyCode == 27){
+    document.getElementById('update').style.display='none'
+    }
+  };
+</script>
+{% endblock %}
