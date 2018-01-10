@@ -26,6 +26,7 @@ table, th, td {
    	<th><center>MODAL_PRICE</center></th>
    	<th><center>UNITY_OF_PRICE</center></th>
    	<th><center>UPDATA</center></th>
+    <th><center>DATE</center></th>
 <!--     <center><th>UPDATA</th></center>
     <center><th>DELECT</th></center> -->
   </tr>  
@@ -41,6 +42,7 @@ table, th, td {
     <td><center><b>{{x['MAX_PRICE']}}</b></center></td>
     <td><center><b>{{x['MODAL_PRICE']}}</b></center></td>
     <td><center><b>{{x['UNITY_OF_PRICE']}}</b></center></td>
+    <td><center><b>{{x['DATE']}}</b></center></td>
     <td><center><button><a class="btn btn-success" href="/update_market_price?id={{x['ID']}}">EDIT</a></button></center></td>
   </tr>
   {% endfor %}
