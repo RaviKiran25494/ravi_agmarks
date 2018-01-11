@@ -1,0 +1,48 @@
+{% extends 'layout1.html' %}
+
+{% block body %}
+  
+  {% from "includes/_formhelper.html" import render_field %}
+  <form method="POST" class="w3-cell w3-padding-large w3-card-4 w3-light-grey w3-text-black">
+    <div class="w3-panel w3-border w3-border-indigo w3-hover-border-orange">
+        <h2 class="w3-center w3-panel w3-indigo w3-padding" style="font-size:2rem; font-weight:600">LOGISTICS / TRANSPORT<br>REGISTRATION</h2>
+      <div class="w3-row w3-section">
+        <div class="w3-col" style="width:50px"><i class="w3-xxlarge fa fa-user"></i></div>
+        <div class="w3-rest">
+          {{render_field(form.fullname, class_="w3-input w3-border", placeholder="Full Name")}}
+        </div>
+      </div>
+      <div class="w3-row w3-section">
+        <div class="w3-col" style="width:50px"><i class="w3-xxlarge fa fa-phone"></i></div>
+        <div class="w3-rest">
+          {{render_field(form.contactnumber, class_="w3-input w3-border", placeholder="Contact Number")}}
+        </div>
+      </div>
+      <div class="w3-row w3-section">
+        <div class="w3-col" style="width:50px"><i class="w3-xxlarge fa fa-envelope-o"></i></div>
+        <div class="w3-rest">
+          {{render_field(form.email, class_="w3-input w3-border", placeholder="Email")}}
+        </div>
+      </div>
+      <div class="w3-row w3-section">
+        <div class="w3-col" style="width:50px"><i class="w3-xxlarge fa fa-id-badge" ></i></div>
+        <div class="w3-rest">
+          {{render_field(form.companyName, class_="w3-input w3-border", placeholder="Company Name")}}
+        </div>
+      </div>
+      <div class="w3-row w3-section">
+        <div class="w3-col" style="width:50px"><i class="w3-xxlarge fa fa-truck" ></i></div>
+        <div class="w3-rest">
+          {{render_field(form.vehicleType, class_="w3-input w3-border")}}
+        </div>
+      </div>
+      <div class="w3-row w3-section">
+        <div class="w3-col" style="width:50px"><i class="w3-xxlarge fa fa-phone"></i></div>
+        <div class="w3-rest">
+            {{render_field(form.confirmcontactnumber, class_="w3-input w3-border", placeholder="Confirm your Mobile Number")}}
+        </div>
+      </div>
+      <button class="w3-button w3-block w3-section w3-black ">Register</button>
+    </div>
+  </form>
+{% endblock %}

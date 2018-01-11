@@ -548,6 +548,33 @@ def traderregistration():
     return render_template('home1.html')
   return render_template('trader_reg.html', form=form)
 
+# ------------------------Logistics/Transport Registration----------------------------
+
+class LogisticsRegistrationForm(Form):
+  fullname=StringField('Full Name', [validators.Length(min=1, max=50)])
+  contactnumber=StringField(u'Contact Number',[
+            validators.Length(min=1, max=20),
+            validators.DataRequired(),
+            validators.EqualTo('confirmcontactnumber', message='Contact Number didn\'t match')
+        ])
+  email=StringField('Email',[validators.Length(min=2,max=50)])
+  companyName=StringField('Comapny Name',[validators.Length(min=2,max=50)])
+  vehicleType = SelectField(u'Vehicle Type', choices=[('','Vehicle Type'),('Ape/Tata Ace','Ape/Tata Ace'),('Truck/DCM','Truck/DCM'),('Lorry', 'Lorry')])
+  confirmcontactnumber=StringField(u'Confirm Contact Number',[validators.Length(min=1,max=20)])
+
+@app.route('/logisticsregistration', methods=['GET', 'POST'])
+def logisticsregistration():
+  form=LogisticsRegistrationForm(request.form)
+  if request.method == 'POST' and form.validate():
+    LTRfullname=form.fullname.data
+    LTRcontactnumber=form.contactnumber.data
+    LTRemail=form.email.data
+    LTRcompanyName=form.companyName.data
+    LTRvehicleType=form.vehicleType.data
+    print (LTRfullname, LTRcontactnumber, LTRemail, LTRcompanyName, LTRvehicleType)
+    return render_template('home1.html')
+  return render_template('logistics_reg.html', form=form)
+
 #==========================end registations=======================================
 
 # #--------------------------foodprocesser register-----------------------
