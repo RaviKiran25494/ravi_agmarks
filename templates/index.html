@@ -100,7 +100,7 @@
                 </div>
               <div class="col-md-6 col-sm-6 col-xs-12 w3-margin-bottom w3-display-container">
               <div class="w3-themeo w3-padding w3-button w3-bar">
-                <div class="w3-padding w3-section" id="trader_model" onclick="document.getElementById('PopUpModal').style.display='block'">
+                <div class="w3-padding w3-section" id="logistics_model" onclick="document.getElementById('PopUpModal').style.display='block'">
                   <img class="w3-display-left pdl20" src="{{ url_for('static', filename='images/logistt.svg') }}" width="30%" >
                   <b class="w3-display-middle pdl10" style="font-weight:bold;">Logistics</b>
                   </div>
@@ -370,11 +370,17 @@
         {  
           $.get("warehouseregistration",function(data){
             $(".FormContent").html(data);
-            });      
+            });     
         });
         $("#trader_model").click(function()  
         {  
           $.get("traderregistration",function(data){
+            $(".FormContent").html(data);
+            }); 
+        });
+        $("#logistics_model").click(function()  
+        {  
+          $.get("logisticsregistration",function(data){
             $(".FormContent").html(data);
             }); 
         });
