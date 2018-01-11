@@ -1,55 +1,57 @@
 {% extends 'layout1.html' %}
-
 {% block body %}
   {% from "includes/_formhelper.html" import render_field %}
-  <form method="POST" action="/farmerregistration" class="w3-cell w3-padding-large w3-card-4 w3-light-grey w3-text-black">
+  <form method="POST" class="w3-cell w3-padding-large w3-card-4 w3-light-grey w3-text-black" action="/farmerregistration">
     <div class="w3-panel w3-border w3-border-indigo w3-hover-border-orange">
       <h2 class="w3-center w3-panel w3-indigo w3-padding" style="font-size:2rem; font-weight:600">FARMER REGISTRATION</h2>
       <div class="w3-row w3-section">
-        <div class="w3-col" style="width:50px"><i class="w3-xxlarge fa fa-user"></i></div>
+        <div class="w3-col" style="width:50px">
+          <i class="w3-xxlarge fa fa-user"></i>
+        </div>
         <div class="w3-rest">
           {{render_field(form.firstName, class_="w3-input w3-border", placeholder="First Name")}}
         </div>
       </div>
       <div class="w3-row w3-section">
-        <div class="w3-col" style="width:50px"><i class="w3-xxlarge fa fa-user"></i></div>
+        <div class="w3-col" style="width:50px">
+          <i class="w3-xxlarge fa fa-user"></i>
+        </div>
         <div class="w3-rest">
           {{render_field(form.lastName, class_="w3-input w3-border", placeholder="Last Name")}}
         </div>
       </div>
       <div class="w3-row w3-section">
-      <div class="w3-col" style="width:50px"><i class="w3-xxlarge fa fa-calendar"></i></div>
+        <div class="w3-col" style="width:100px">
+          <b>Date of Birth</b>
+        </div>
         {{render_field(form.dateofBirth, class_="form-control w3-border w3-cell-middle", style="width: 150px;", id="exampleInputDOB1")}}
       </div>
       <div class="w3-row w3-section">
-        <div class="w3-col" style="width:50px"><i class="w3-xxlarge fa fa-envelope-o"></i></div>
+        <div class="w3-col" style="width:50px">
+          <i class="w3-xxlarge fa fa-envelope-o"></i>
+        </div>
         <div class="w3-rest">
           {{render_field(form.email, class_="w3-input w3-border", placeholder="Email")}}
         </div>
       </div>
       <div class="w3-row w3-section">
-        <div class="w3-col" style="width:50px"><i class="w3-xxlarge fa fa-phone"></i></div>
+        <div class="w3-col" style="width:50px">
+          <i class="w3-xxlarge fa fa-phone"></i>
+        </div>
         <div class="w3-rest">
           {{render_field(form.contactnumber, class_="w3-input w3-border", placeholder="Phone")}}
         </div>
       </div>
       <div class="w3-row w3-section">
-        <div class="w3-col" style="width:50px"><i class="w3-xxlarge fa fa-pencil"></i></div>
+        <div class="w3-col" style="width:50px">
+          <i class="w3-xxlarge fa fa-pencil"></i>
+        </div>
         <div class="w3-rest">
           {{render_field(form.aadharNumber, class_="w3-input w3-border", placeholder="Aadhar Number")}}
         </div>
       </div>
       <div class="w3-section w3-center">
         {{render_field(form.photo, class_="input-file-preview", accept="image/png, image/jpeg, image/gif")}}
-        <!-- <div class="input-group image-preview ">
-          <span class="input-group-btn">
-          <div class="btn w3-btn pdb15 image-preview-input"> -->
-            <!-- <span class="glyphicon glyphicon-folder-open"></span>
-            <span class="image-preview-input-title">Upload Photo</span> -->
-            <!--             
-          </div>
-        </span> -->
-        <!-- </div>/input-group image-preview [TO HERE]  -->
       </div>
       <div class="w3-row w3-section">
         <p class="w3-large">
@@ -57,7 +59,9 @@
           &nbsp;Select your Crop Type
         </p>
         <div class="checkbox-inline">
-          {{render_field(form.croptype, class_="checkbox-inline")}}
+          <label class="checkbox-inline">
+            {{render_field(form.croptype, class_="checkbox-inline")}}
+          </label>
         </div>
       </div>
       <div class="w3-row w3-section">
@@ -80,36 +84,56 @@
       </div>
       <div class="w3-row w3-section">
         <div class="w3-rest">
+          <label class="control-label" for="street_address">
+            <b>Address</b>
+          </label>
           {{render_field(form.address, class_="w3-input w3-border", placeholder="Write Your Address here")}}
         </div>
       </div>
       <div class="w3-row w3-section">
         <div class="w3-rest">
+          <label class="control-label" for="State">
+            <b>State</b>
+          </label>
           {{render_field(form.state, class_="w3-select")}}
         </div>
       </div>
       <div class="w3-row w3-section">
         <div class="w3-rest">
+          <label class="control-label" for="District">
+            <b>District</b>
+          </label>
           {{render_field(form.district, class_="w3-select")}}
         </div>
       </div>
       <div class="w3-row w3-section">
         <div class="w3-rest">
+          <label class="control-label" for="village">
+            <b>Village</b>
+          </label>
           {{render_field(form.village, class_="w3-input w3-border", placeholder="Village")}}
         </div>
       </div>
       <div class="w3-row w3-section">
         <div class="w3-rest">
+          <label class="control-label" for="Taluka">
+            <b>Taluka</b>
+          </label>
           {{render_field(form.taluka, class_="w3-input w3-border", placeholder="Taluka")}}         
         </div>
       </div>
       <div class="w3-row w3-section">
         <div class="w3-rest">
+          <label class="control-label" for="Pincode">
+            <b>Pincode</b>
+          </label>
           {{render_field(form.pincode, class_="w3-input w3-border", placeholder="Pincode")}}
         </div>
       </div>
       <div class="w3-row w3-section">
-        <div class="w3-col" style="width:50px"><i class="w3-xxlarge fa fa-phone"></i></div>
+        <div class="w3-col" style="width:50px">
+          <i class="w3-xxlarge fa fa-phone"></i>
+        </div>
         <div class="w3-rest">
             {{render_field(form.confirmcontactnumber, class_="w3-input w3-border", placeholder="Confirm your Mobile Number")}}
         </div>
