@@ -17,7 +17,7 @@
     <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">Registation  
     <span class="caret"></span></button>  
     <ul class="dropdown-menu">  
-     <li><a class="one" href="/farmerregistration">Farmer</a></li>  
+     <li><a class="one" href="#">Farmer</a></li>  
       <li><a class="two" href="#">Food Processor</a></li>  
       <li><a  class="four" href="#">Storage/Warehouse</a></li>
       <li><a  class="five" href="#">Trader</a></li>  
@@ -36,14 +36,14 @@ var p3 = "<h2>Our Services</h2><p>Lorem Ipsum is simply dummy text of the printi
 $(document).ready(function(){
 $(".one").click(function()   
 {  
-	$.get("farmerregistration",function(data){
+	$.get("register",function(data){
 		$(".container-right").html(data);
 		});
       
 });  
 $(".two").click(function()  
 {  
-   $.get("foodprocesserregistration",function(data){
+   $.get("farmer_reg",function(data){
     $(".modal-body").html(data);
     });
         
@@ -67,10 +67,9 @@ $(".three").click(function()
     $(".container-right").html(p3);  
 });
 
-
+});
         
-
-});	
+	
 </script>
 </head>
 
@@ -149,32 +148,7 @@ $(".three").click(function()
   
 </div>
 <!-- endmodel --> 
-<!-- w3 model -->
-<html>
-<title>W3.CSS</title>
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
-<body>
 
-<div class="w3-container">
-  <h2>W3.CSS Modal</h2>
-  <button onclick="document.getElementById('id01').style.display='block'" class="w3-button w3-black">Open Modal</button>
-
-  <div id="id01" class="w3-modal">
-    <div class="w3-modal-content">
-      <div class="w3-container">
-        <span onclick="document.getElementById('id01').style.display='none'" class="w3-button w3-display-topright">&times;</span>
-        <p>Some text. Some text. Some text.</p>
-        <p>Some text. Some text. Some text.</p>
-      </div>
-    </div>
-  </div>
-</div>
-            
-</body>
-</html>
-
-<!-- end-w3 model -->
  
 
  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>  

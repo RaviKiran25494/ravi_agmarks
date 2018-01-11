@@ -43,6 +43,10 @@ app.config['MYSQL_CURSORCLASS'] = 'DictCursor'
 
 mysql=MySQL(app)
 
+@app.route('/home12')
+def home12():
+    return render_template('home.html')
+
 #--------------------------static routes-------------------------
 @app.route('/about')
 def about():
@@ -814,79 +818,79 @@ def weather():
 # #--------------------------------------farmer reg---------------
 
 
-# class MultiCheckboxField(SelectMultipleField):
-#     widget = widgets.ListWidget(prefix_label=False)
-#     option_widget = widgets.CheckboxInput()
+class MultiCheckboxField(SelectMultipleField):
+    widget = widgets.ListWidget(prefix_label=False)
+    option_widget = widgets.CheckboxInput()
 
-# class RegisterForm(Form):
-#   first_name=StringField('first_name',[validators.Length(min=1,max=10)])
-#   last_name1= StringField('last_name',[validators.Length(min=1,max =10 )])
-#   dt = DateField('Date', format='%Y-%m-%d')
-#   email=StringField('Email',[validators.Length(min=2,max=50)])
-#   mobile=StringField('Phone',[validators.Length(min=10,max=13)])
-#   aadher_number=StringField('Aadher number',[validators.Length(min=1,max=16)])
-#   string_of_files = ['Paddy\r\nWheat\r\nCotton\r\nMirchi\r\nVegetables']
-#   list_of_files = string_of_files[0].split()
-#   files = [(x, x) for x in list_of_files]
-#   example = MultiCheckboxField('Label', choices=files)
+class RegisterForm(Form):
+  first_name=StringField('first_name',[validators.Length(min=1,max=10)])
+  last_name1= StringField('last_name',[validators.Length(min=1,max =10 )])
+  dt = DateField('Date', format='%Y-%m-%d')
+  email=StringField('Email',[validators.Length(min=2,max=50)])
+  mobile=StringField('Phone',[validators.Length(min=10,max=13)])
+  aadher_number=StringField('Aadher number',[validators.Length(min=1,max=16)])
+  string_of_files = ['Paddy\r\nWheat\r\nCotton\r\nMirchi\r\nVegetables']
+  list_of_files = string_of_files[0].split()
+  files = [(x, x) for x in list_of_files]
+  example = MultiCheckboxField('Label', choices=files)
 
-#   string_of_files1 = ['Cattle\r\nFish\r\nPoultry\r\nGoat\r\nSheep']
-#   list_of_files1 = string_of_files1[0].split()
-#   files1 = [(x, x) for x in list_of_files1]
-#   example1 = MultiCheckboxField('Label', choices=files1)
+  string_of_files1 = ['Cattle\r\nFish\r\nPoultry\r\nGoat\r\nSheep']
+  list_of_files1 = string_of_files1[0].split()
+  files1 = [(x, x) for x in list_of_files1]
+  example1 = MultiCheckboxField('Label', choices=files1)
 
-#   string_of_files2 = ['Milk\r\nGhee\r\nButter\r\nCheese\r\nMilk Powder']
-#   list_of_files2 = string_of_files2[0].split()
-#   files2 = [(x, x) for x in list_of_files2]
-#   example2 = MultiCheckboxField('Label', choices=files)
+  string_of_files2 = ['Milk\r\nGhee\r\nButter\r\nCheese\r\nMilk Powder']
+  list_of_files2 = string_of_files2[0].split()
+  files2 = [(x, x) for x in list_of_files2]
+  example2 = MultiCheckboxField('Label', choices=files)
 
-#   address = TextAreaField(u'Address', [validators.optional(), validators.length(max=200)])
-#   stata = SelectField(u'Choose your State', choices=[('None','None'),('Andhra Pradesh','Andhra Pradesh'),('Telangana','Telangana')])
-#   districtand = SelectField(u'District', choices=[('None','None'),('Anantapur','Anantapur'),('Chittoor','Chittoor'),('East Godavari','East Godavari'),('Guntur','Guntur'),('Krishna','Krishna'),('Kurnool','Kurnool'),('Nellore','Nellore'),('Prakasam','Prakasam'),('Srikakulam','Srikakulam'),('Visakhapatnam','Visakhapatnam'),('Vizianagaram','Vizianagaram'),('West Godavari','West Godavari'),('YSR Kadapa','YSR Kadapa')])
-#   Village=StringField('Village',[validators.Length(min=1,max=16)])
-#   Taluka=StringField('Taluka',[validators.Length(min=1,max=16)])
-#   Pincode=StringField('Pincode',[validators.Length(min=4,max=10)])
+  address = TextAreaField(u'Address', [validators.optional(), validators.length(max=200)])
+  stata = SelectField(u'Choose your State', choices=[('None','None'),('Andhra Pradesh','Andhra Pradesh'),('Telangana','Telangana')])
+  districtand = SelectField(u'District', choices=[('None','None'),('Anantapur','Anantapur'),('Chittoor','Chittoor'),('East Godavari','East Godavari'),('Guntur','Guntur'),('Krishna','Krishna'),('Kurnool','Kurnool'),('Nellore','Nellore'),('Prakasam','Prakasam'),('Srikakulam','Srikakulam'),('Visakhapatnam','Visakhapatnam'),('Vizianagaram','Vizianagaram'),('West Godavari','West Godavari'),('YSR Kadapa','YSR Kadapa')])
+  Village=StringField('Village',[validators.Length(min=1,max=16)])
+  Taluka=StringField('Taluka',[validators.Length(min=1,max=16)])
+  Pincode=StringField('Pincode',[validators.Length(min=4,max=10)])
 
 
 
-# @app.route('/register', methods = ['GET', 'POST'])
+@app.route('/register', methods = ['GET', 'POST'])
 
-# def register():
-#    form = RegisterForm(request.form)
-#    print("hiii")
-#    if request.method == 'POST' and form.validate():
-#        print("h3")
-#        target = os.path.join(APP_ROOT, 'images/')
-#        print (target)
+def register():
+   form = RegisterForm(request.form)
+   print("hiii")
+   if request.method == 'POST' and form.validate():
+       print("h3")
+       target = os.path.join(APP_ROOT, 'images/')
+       print (target)
 
-#        if not os.path.isdir(target):
-#         os.mkdir(target)
-#        for file in request.files.getlist("file"):
-#         print(file)
-#         filename = file.filename
-#         destination = "/".join([target, filename])
-#         print (destination)
-#         file.save(destination)
-#        fname = form.first_name.data
-#        lname1 = form.last_name1.data
-#        dt = form.dt.data
-#        email = form.email.data
-#        mobile = form.mobile.data
-#        aadher_number = form.aadher_number.data
-#        address = form.address.data
-#        stata = form.stata.data
-#        districtand = form.districtand.data
-#        Village = form.Village.data
-#        Taluka = form.Taluka.data
-#        Pincode= form.Pincode.data
-#        print(fname,lname1,dt,email,mobile,aadher_number,address,stata,districtand,Village,Taluka,Pincode)
-#        print ("you checked",form.example.data)
-#        print ("you checked",form.example1.data)
-#        print ("you checked",form.example2.data)
+       if not os.path.isdir(target):
+        os.mkdir(target)
+       for file in request.files.getlist("file"):
+        print(file)
+        filename = file.filename
+        destination = "/".join([target, filename])
+        print (destination)
+        file.save(destination)
+       fname = form.first_name.data
+       lname1 = form.last_name1.data
+       dt = form.dt.data
+       email = form.email.data
+       mobile = form.mobile.data
+       aadher_number = form.aadher_number.data
+       address = form.address.data
+       stata = form.stata.data
+       districtand = form.districtand.data
+       Village = form.Village.data
+       Taluka = form.Taluka.data
+       Pincode= form.Pincode.data
+       print(fname,lname1,dt,email,mobile,aadher_number,address,stata,districtand,Village,Taluka,Pincode)
+       print ("you checked",form.example.data)
+       print ("you checked",form.example1.data)
+       print ("you checked",form.example2.data)
        
-#        return redirect(url_for('home'))
+       return redirect(url_for('home'))
 
-#    return render_template('register.html',form = form)
+   return render_template('register.html',form = form)
 
 
 # #--------------------------foodprocesser register-----------------------
