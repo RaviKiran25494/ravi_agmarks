@@ -1,6 +1,7 @@
-{% extends 'layout1.html' %}
+{% extends 'layout.html' %}
 
 {% block body %}
+<center>
 {% from "includes/_formhelper.html" import render_field %}
   <form method="POST" class="w3-cell w3-padding-large w3-card-4 w3-light-grey w3-text-black">
     <div class="w3-panel w3-border w3-border-indigo w3-hover-border-orange">
@@ -146,6 +147,7 @@
       minViewMode: 'years'
     });
 </script> -->
+</center>
 {% endblock %}
 
 

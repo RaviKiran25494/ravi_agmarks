@@ -46,7 +46,9 @@ mysql=MySQL(app)
 @app.route('/home12')
 def home12():
     return render_template('home.html')
-
+@app.route('/signup')
+def signup():
+    return render_template('signup.html')
 #--------------------------static routes-------------------------
 @app.route('/about')
 def about():
@@ -60,31 +62,106 @@ def faq():
 @app.route('/how_to_reg')
 def how_to_reg():
     return render_template('how_to_reg.html')
-@app.route('/beneits')
-def beneits():
-    return render_template('beneits.html')
 #-----services
-@app.route('/services_farmer')
-def services_farmer():
-    return render_template('services_farmer.html')
-@app.route('/services_process')
-def services_process():
-    return render_template('services_process.html')
-@app.route('/services_storage')
-def services_storage():
-    return render_template('services_storage.html')
-@app.route('/services_supplier')
-def services_supplier():
-    return render_template('services_supplier.html')
-@app.route('/services_trader')
-def services_trader():
-    return render_template('services_trader.html')
-@app.route('/services_logistics')
+@app.route('/services_agri')
+def services_agri():
+    return render_template('services_agri.html')
+
+@app.route('/services_dairy')
+def services_dairy():
+    return render_template('services_dairy.html')
+@app.route('/services_animal_hury')
+def services_animal_hury():
+    return render_template('services_animal_hury.html')
+#-----benefits
+@app.route('/benefits_farmer')
+def benefits_farmer():
+    return render_template('benefits_farmer.html')
+@app.route('/benefits_process')
+def benefits_process():
+    return render_template('benefits_process.html')
+@app.route('/benefits_storage')
+def benefits_storage():
+    return render_template('benefits_storage.html')
+@app.route('/benefits_supplier')
+def benefits_supplier():
+    return render_template('benefits_supplier.html')
+@app.route('/benefits_trader')
+def benefits_trader():
+    return render_template('benefits_trader.html')
+@app.route('/benefits_logistics')
 def services_logistics():
-    return render_template('services_logistics.html')
+    return render_template('benefits_logistics.html')
 
 
 #-------------------------end static routes----------------------
+#-----------------------------------------login----------------
+@app.route('/login',methods = ['GET','POST'])
+def login():
+   if request.method == 'POST':
+       #get form fields
+
+       username = request.form['username']
+       password_candidate = request.form['password']
+
+       # Create cursor
+       cur = mysql.connection.cursor()
+
+       # get user by username
+
+       result = cur.execute("SELECT * FROM users WHERE username = %s",[username])
+       print('name:',username)
+       if result > 0:
+
+           data = cur.fetchone()
+           password = data['password']
+
+           # print('password1',password1);
+           print('password:',password_candidate)
+
+           # if sha256_crypt.verify(password_candidate,password):
+           if (password_candidate==password):
+
+
+               #app.logger.info('Passwords Matched')
+               session['logged_in'] = True
+               session['username'] = username
+               # print('password11',password_candidate);
+               # print('password12:',password)
+
+               flash('You are now logged in','success')
+               return redirect(url_for('home'))
+           else:
+               error = 'Invalid Login'
+               #app.logger.info('Passwords Not matched')
+               return render_template('login.html',error=error)
+           # close connection
+           cur.close()
+       else:
+           #app.logger.info('No user')
+           error:'Username not found'
+           return render_template('login.html',error=error)
+
+   return render_template('login.html')
+def is_logged_in(f):
+   @wraps(f)
+   def wrap(*args, **kwargs):
+       if 'logged_in' in session:
+           return f(*args, **kwargs)
+       else:
+           flash('Unauthorized, Please Login','danger')
+           return redirect(url_for('login'))
+   return wrap
+
+   return render_template('login.html')
+# Logout
+@app.route('/logout')
+def logout():
+    session.clear()
+    flash('You are now logged out','success')
+    return redirect(url_for('login'))
+
+#---------------------------------------------------------
 
 # ------------------------market-prices-----------------------------------
 import datetime
@@ -408,7 +485,7 @@ def farmerregistration():
     farmerPincode=form.pincode.data
     print (farmerFirstname, farmerLastname, farmerDateofBirth, farmerEmail, farmerContactNumber, farmeraadharNumber, farmerAddress, farmerCroptype, farmerAnimalHusbandryType, farmerDairyform, farmerState, farmerDistrict, farmerVillage, farmerTaluka, farmerPincode)
     return render_template('home1.html')
-  return render_template('far_reg.html', form=form)
+  return render_template('far_reg1.html', form=form)
 
 
 # -------------------Food Processor Registration-------------------------
@@ -654,7 +731,7 @@ def logisticsregistration():
 # -----------------------------Login/logout-------------------------------- 
 
 
-@app.route('/')
+@app.route('/index')
 
 
 def home():
@@ -663,7 +740,7 @@ def home():
 
 
 #--------------------------neewsfeed-------------------------------
-@app.route('/test')
+@app.route('/')
 def scrape12():
     l = []
     base_url = 'https://economictimes.indiatimes.com/news/economy/agriculture/articlelist/msid-1202099874,contenttype-a.cms'
@@ -735,7 +812,7 @@ def scrape12():
       paddy=cur.fetchall()
       paddy=list(paddy)
     else:
-      cur.execute("SELECT * FROM `%s` WHERE `COMMODITY`='Paddy'AND `VARIETY`='Paddy'"%e)
+      cur.execute("SELECT * FROM `updatetables` WHERE `COMMODITY`='Paddy'AND `VARIETY`='Paddy'")
       paddy=cur.fetchall()
       paddy=list(paddy)
     if(z==1):   
@@ -743,7 +820,7 @@ def scrape12():
       groundnut=cur.fetchall()
       groundnut=list(groundnut)
     else:
-      cur.execute("SELECT * FROM `%s` WHERE `COMMODITY`='Groundnut'AND `VARIETY`='Local'"%e)
+      cur.execute("SELECT * FROM `updatetables` WHERE `COMMODITY`='Groundnut'AND `VARIETY`='Local'")
       groundnut=cur.fetchall()
       groundnut=list(groundnut)
     if(z==1):   
@@ -751,7 +828,7 @@ def scrape12():
       Chillies=cur.fetchall()
       Chillies=list(Chillies)
     else:
-      cur.execute("SELECT * FROM `%s` WHERE `COMMODITY`='Dry Chillies'AND `VARIETY`='1st Sort'"%e)
+      cur.execute("SELECT * FROM `updatetables` WHERE `COMMODITY`='Dry Chillies'AND `VARIETY`='1st Sort'")
       Chillies=cur.fetchall()
       Chillies=list(Chillies)
     if(z==1):   
@@ -759,7 +836,7 @@ def scrape12():
       tamarindfruit=cur.fetchall()
       tamarindfruit=list(tamarindfruit)
     else:
-      cur.execute("SELECT * FROM `%s` WHERE `COMMODITY`='Tamarind Fruit'AND `VARIETY`='Flower Ac'"%e)
+      cur.execute("SELECT * FROM `updatetables` WHERE `COMMODITY`='Tamarind Fruit'AND `VARIETY`='Flower Ac'")
       tamarindfruit=cur.fetchall()
       tamarindfruit=list(tamarindfruit)
     if(z==1):   
@@ -767,7 +844,7 @@ def scrape12():
       cotton=cur.fetchall()
       cotton=list(cotton)
     else:
-      cur.execute("SELECT * FROM `%s` WHERE `COMMODITY`='Cotton'AND `VARIETY`='MCU 5'"%e)
+      cur.execute("SELECT * FROM `updatetables` WHERE `COMMODITY`='Cotton'AND `VARIETY`='MCU 5'")
       cotton=cur.fetchall()
       cotton=list(cotton)
 
@@ -777,7 +854,7 @@ def scrape12():
       tomato=cur.fetchall()
       tomato=list(tomato)
     else:
-      cur.execute("SELECT * FROM `%s` WHERE `COMMODITY`='Tomato'AND `VARIETY`='Local'"%e)
+      cur.execute("SELECT * FROM `updatetables` WHERE `COMMODITY`='Tomato'AND `VARIETY`='Local'")
       tomato=cur.fetchall()
       tomato=list(tomato)
     if(z==1):   
@@ -785,7 +862,7 @@ def scrape12():
       banana=cur.fetchall()
       banana=list(banana)
     else:
-      cur.execute("SELECT * FROM `%s` WHERE `COMMODITY`='Banana - Green'AND `VARIETY`='Banana - Green'"%e)
+      cur.execute("SELECT * FROM `updatetables` WHERE `COMMODITY`='Banana - Green'AND `VARIETY`='Banana - Green'")
       banana=cur.fetchall()
       banana=list(banana)
     if(z==1):   
@@ -793,7 +870,7 @@ def scrape12():
       Coconut=cur.fetchall()
       Coconut=list(Coconut)
     else:
-      cur.execute("SELECT * FROM `%s` WHERE `COMMODITY`='Coconut'AND `VARIETY`='Coconut'"%e)
+      cur.execute("SELECT * FROM `updatetables` WHERE `COMMODITY`='Coconut'AND `VARIETY`='Coconut'")
       Coconut=cur.fetchall()
       Coconut=list(Coconut)
     if(z==1):   
@@ -801,7 +878,7 @@ def scrape12():
       Onion=cur.fetchall()
       Onion=list(Onion)
     else:
-      cur.execute("SELECT * FROM `%s` WHERE `COMMODITY`='Onion'AND `VARIETY`='Local'"%e)
+      cur.execute("SELECT * FROM `updatetables` WHERE `COMMODITY`='Onion'AND `VARIETY`='Local'")
       Onion=cur.fetchall()
       Onion=list(Onion)
     if(z==1):   
@@ -809,7 +886,7 @@ def scrape12():
       Papaya=cur.fetchall()
       Papaya=list(Papaya)
     else:
-      cur.execute("SELECT * FROM `%s` WHERE `COMMODITY`='Papaya'AND `VARIETY`='Papaya'"%e)
+      cur.execute("SELECT * FROM `updatetables` WHERE `COMMODITY`='Papaya'AND `VARIETY`='Papaya'")
       Papaya=cur.fetchall()
       Papaya=list(Papaya)
 #================milk
@@ -822,7 +899,7 @@ def scrape12():
        #close connection
     cur.close()
 
-    return render_template('index.html',l=l,a1=a1,rv=rv,dt=dt,paddy=paddy,groundnut=groundnut,Chillies=Chillies,cotton=cotton,tamarindfruit=tamarindfruit,Papaya=Papaya,Onion=Onion,tomato=tomato,banana=banana,Coconut=Coconut)           
+    return render_template('index1.html',l=l,a1=a1,rv=rv,dt=dt,paddy=paddy,groundnut=groundnut,Chillies=Chillies,cotton=cotton,tamarindfruit=tamarindfruit,Papaya=Papaya,Onion=Onion,tomato=tomato,banana=banana,Coconut=Coconut)           
     
     # return render_template('index.html')
 
