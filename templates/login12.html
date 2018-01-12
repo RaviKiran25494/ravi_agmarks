@@ -1,0 +1,14 @@
+{% extends 'layout.html' %}
+{% block body %}
+
+
+{% from "includes/_formhelper.html" import render_field %}
+          <form method="POST" class="w3-container">
+            <div class="w3-section">
+              {{render_field(form.username, class_="w3-input w3-border w3-margin-bottom w3-opacity-min", placeholder="Enter Username")}}
+              {{render_field(form.password, class_="w3-input w3-border w3-opacity-min", placeholder="Enter Password")}}
+              <button class="w3-button w3-block pdb10 w3-section w3-themeo-d1 w3-text-white w3-hover-theme" type="submit">Login</button>
+            </div>
+          </form>
+
+{% endblock %}

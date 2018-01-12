@@ -4,7 +4,7 @@ class Db():
 
   def __init__(self):
        # print(‘DB is initiated’)
-       self.conn = MySQLdb.connect(user="root", password="", database="flaskappdb")
+       self.conn = MySQLdb.connect(user="root", password="", database="agmark")
        # print(‘DB is created’)
        # print(self.conn)
 

@@ -21,7 +21,7 @@
         <h5><b>Pesticides</b></h5>
         <p class=" w3-justify">Either   due   to   lack   of   awareness   on infections  or  a  new  kind  of  infection, agmarks will analyse and provide proper pesticides  from  verified  companies  to use.   Farmer   is   provided   with   an interface to upload the infected plant and send it.</p>
         <div class="pdb15 pdt15 w3-center">
-          <img src="images/farmer.jpg" width="50%">
+          <img src="{{ url_for('static', filename='images/farmer.jpg') }}" width="50%">
         </div>           
         <h5><b>Weather</b></h5>
         <p class=" w3-justify">Agmarks   provide   customized   weather information by taking google & IMD Information together. This along with canal water resources information, he can take better decision.</p>
@@ -64,10 +64,35 @@
           </form>
      	 </div>
         {% from "includes/_formhelper.html" import render_field %}
-        <form method="POST" class="w3-cell w3-padding-large w3-card-4 w3-light-grey w3-text-black" action="/farmerregistration">
-          <div class="w3-panel w3-border w3-border-indigo w3-hover-border-orange">
-            <h2 class="w3-center w3-panel w3-indigo w3-padding" style="font-size:2rem; font-weight:600">FARMER REGISTRATION</h2>
-            <div class="w3-row w3-section">
+        <form action="/farmerregistration" class="w3-card-4 w3-light-grey w3-text-black">
+        <div class="w3-panel w3-border w3-border-indigo w3-hover-border-orange">
+          <h2 class="w3-center w3-panel w3-theme w3-padding" style="font-size:3vmin;">FARMER REGISTRATION</h2>
+
+          <div class="w3-row w3-section">
+          <div class="w3-col" style="width:50px"><i class="w3-xxlarge fa fa-calendar"></i></div>
+            <div class="w3-rest">
+               {{render_field(form.dateofBirth, class_="form-control w3-border w3-cell-middle", id="exampleInputDOB1")}}
+            </div>
+        </div>
+
+        <div class="w3-row w3-section">
+          <div class="w3-col" style="width:50px"><i class="w3-xxlarge fa fa-phone"></i></div>
+            <div class="w3-rest">
+              {{render_field(form.contactnumber, class_="w3-input w3-border", placeholder="Phone")}}
+            </div>
+        </div>
+
+        <div class="w3-row w3-section">
+          <div class="w3-col" style="width:50px"><i class="w3-xxlarge fa fa-pencil"></i></div>
+            <div class="w3-rest">
+              {{render_field(form.aadharNumber, class_="w3-input w3-border", placeholder="Aadhar Number")}}
+            </div>
+        </div>
+        <button class="w3-button w3-block w3-section w3-black ">Register</button>
+      </div>
+      </form>
+          
+            <!-- <div class="w3-row w3-section">
               <div class="w3-col" style="width:50px">
                 <i class="w3-xxlarge fa fa-user"></i>
               </div>
@@ -203,7 +228,7 @@
             </div>
             <button class="w3-button w3-block w3-section w3-black ">Register</button>
           </div>
-        </form>
+        </form> -->
 
       </div>
     </div>   

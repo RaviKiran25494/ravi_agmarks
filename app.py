@@ -18,6 +18,11 @@ import requests#scrapy
 from flask import jsonify#neewsfeeds
 from scrapingneews import scrape12#neewsfeeds
 
+
+import datetime
+from datetime import date, timedelta
+now = datetime.date.today()
+dt=now
  
 
 
@@ -25,8 +30,9 @@ from scrapingneews import scrape12#neewsfeeds
 # from flask_wtf.csrf import CSRFProtect#pip install flask_csrf
 db = Db()
 courseList = []
-for i in db.execute("SELECT * FROM course_names"):
-    courseList.append(i)
+mark={}
+# for i in db.execute("SELECT * FROM course_names"):
+#     courseList.append(i)
 db.commit()
 db.close()
 
@@ -38,7 +44,7 @@ APP_ROOT = os.path.dirname(os.path.abspath(__file__))
 app.config['MYSQL_HOST'] = 'localhost'
 app.config['MYSQL_USER'] = 'root'
 app.config['MYSQL_PASSWORD'] = ''
-app.config['MYSQL_DB'] = 'flaskappdb'
+app.config['MYSQL_DB'] = 'agmark'
 app.config['MYSQL_CURSORCLASS'] = 'DictCursor'
 
 mysql=MySQL(app)
@@ -95,6 +101,8 @@ def services_logistics():
 
 
 #-------------------------end static routes----------------------
+#-----------------------------login-login-------------------
+
 #-----------------------------------------login----------------
 @app.route('/login',methods = ['GET','POST'])
 def login():
@@ -164,8 +172,7 @@ def logout():
 #---------------------------------------------------------
 
 # ------------------------market-prices-----------------------------------
-import datetime
-from datetime import date, timedelta
+
 
 @app.route('/market')
 
@@ -194,7 +201,7 @@ def market():
     cur.execute("SHOW TABLES")
     rv1=cur.fetchall()
     for i in range(0,len(rv1)):
-      rv2=rv1[i]['Tables_in_flaskappdb']
+      rv2=rv1[i]['Tables_in_agmark']
       if(str(rv2)==str(d)):
         print(rv2,'==',d)
         z=1
@@ -382,6 +389,7 @@ def update_market_price():
   return render_template('update.html',person=person)
 
 
+
   #==================update12===============================
 @app.route('/update12')
 
@@ -436,6 +444,7 @@ def update12():
   return redirect(url_for('home'))
 
 # ------------------------------REgistations==6----------------------------------
+
 
 # -------------------Farmer Registration-------------------------
 
@@ -654,6 +663,19 @@ def logisticsregistration():
 
 #==========================end registations=======================================
 
+class LogForm(Form):
+  username=StringField('User name', [validators.Length(min=1, max=50),InputRequired()])
+  password=PasswordField('Pass word', [validators.Length(min=1, max=50),InputRequired()])
+ 
+@app.route('/log', methods=['GET', 'POST'])
+def log():
+  form=LogForm(request.form)
+  if request.method == 'POST' and form.validate():
+    username=form.username.data
+    password=form.password.data
+    return render_template('home1.html')
+  return render_template('index1.html', form=form,l=l,a1=a1,dt=dt,mark=mark)
+
 # #--------------------------foodprocesser register-----------------------
 
 # class RegisterForm1(Form):
@@ -740,9 +762,13 @@ def home():
 
 
 #--------------------------neewsfeed-------------------------------
+l = []
+a1=len(l)
+class LoginForm(Form):
+  username=StringField('User Name',[validators.Length(min=1,max=20)])
+  password= PasswordField('Password',[validators.Length(min=1,max =10 )])
 @app.route('/')
 def scrape12():
-    l = []
     base_url = 'https://economictimes.indiatimes.com/news/economy/agriculture/articlelist/msid-1202099874,contenttype-a.cms'
     r = requests.get(base_url)
     soup = BeautifulSoup(r.text, "html.parser")
@@ -796,7 +822,7 @@ def scrape12():
     rv1=cur.fetchall()
     print(len(rv1))
     for i in range(0,len(rv1)):
-        rv2=rv1[i]['Tables_in_flaskappdb']
+        rv2=rv1[i]['Tables_in_agmark']
         if(str(rv2)==str(d)):
           z=1
     if(z==1):  
@@ -811,84 +837,172 @@ def scrape12():
       cur.execute("SELECT * FROM `%s` WHERE `COMMODITY`='Paddy'AND `VARIETY`='Paddy'"%d)
       paddy=cur.fetchall()
       paddy=list(paddy)
+      mark["paddy_com"]=paddy[0]['COMMODITY']
+      mark["paddy_min"]=paddy[0]['MIN_PRICE']
+      mark["paddy_max"]=paddy[0]['MAX_PRICE']
+      mark["paddy_model"]=paddy[0]['MODAL_PRICE']
     else:
-      cur.execute("SELECT * FROM `updatetables` WHERE `COMMODITY`='Paddy'AND `VARIETY`='Paddy'")
+      cur.execute("SELECT * FROM `updatetables` WHERE `COMMODITYITY`='Paddy'AND `VARIETY`='Paddy'")
       paddy=cur.fetchall()
       paddy=list(paddy)
+      mark["paddy_com"]=paddy[0]['COMMODITY']
+      mark["paddy_min"]=paddy[0]['MIN_PRICE']
+      mark["paddy_max"]=paddy[0]['MAX_PRICE']
+      mark["paddy_model"]=paddy[0]['MODAL_PRICE']
     if(z==1):   
       cur.execute("SELECT * FROM `%s` WHERE `COMMODITY`='Groundnut'AND `VARIETY`='Local'"%d)
       groundnut=cur.fetchall()
       groundnut=list(groundnut)
+      mark["groundnut_com"]=groundnut[0]['COMMODITY']
+      mark["groundnut_min"]=groundnut[0]['MIN_PRICE']
+      mark["groundnut_max"]=groundnut[0]['MAX_PRICE']
+      mark["groundnut_model"]=groundnut[0]['MODAL_PRICE']
     else:
       cur.execute("SELECT * FROM `updatetables` WHERE `COMMODITY`='Groundnut'AND `VARIETY`='Local'")
       groundnut=cur.fetchall()
       groundnut=list(groundnut)
+      mark["groundnut_com"]=groundnut[0]['COMMODITY']
+      mark["groundnut_min"]=groundnut[0]['MIN_PRICE']
+      mark["groundnut_max"]=groundnut[0]['MAX_PRICE']
+      mark["groundnut_model"]=groundnut[0]['MODAL_PRICE']
     if(z==1):   
       cur.execute("SELECT * FROM `%s` WHERE `COMMODITY`='Dry Chillies'AND `VARIETY`='1st Sort'"%d)
       Chillies=cur.fetchall()
       Chillies=list(Chillies)
+      mark["Chillies_com"]=Chillies[0]['COMMODITY']
+      mark["Chillies_min"]=Chillies[0]['MIN_PRICE']
+      mark["Chillies_max"]=Chillies[0]['MAX_PRICE']
+      mark["Chillies_model"]=Chillies[0]['MODAL_PRICE']
     else:
       cur.execute("SELECT * FROM `updatetables` WHERE `COMMODITY`='Dry Chillies'AND `VARIETY`='1st Sort'")
       Chillies=cur.fetchall()
       Chillies=list(Chillies)
+      mark["Chillies_com"]=Chillies[0]['COMMODITY']
+      mark["Chillies_min"]=Chillies[0]['MIN_PRICE']
+      mark["Chillies_max"]=Chillies[0]['MAX_PRICE']
+      mark["Chillies_model"]=Chillies[0]['MODAL_PRICE']
     if(z==1):   
       cur.execute("SELECT * FROM `%s` WHERE `COMMODITY`='Tamarind Fruit'AND `VARIETY`='Flower Ac'"%d)
       tamarindfruit=cur.fetchall()
       tamarindfruit=list(tamarindfruit)
+      mark["tamarindfruit_com"]=tamarindfruit[0]['COMMODITY']
+      mark["tamarindfruit_min"]=tamarindfruit[0]['MIN_PRICE']
+      mark["tamarindfruit_max"]=tamarindfruit[0]['MAX_PRICE']
+      mark["tamarindfruit_model"]=tamarindfruit[0]['MODAL_PRICE']
     else:
       cur.execute("SELECT * FROM `updatetables` WHERE `COMMODITY`='Tamarind Fruit'AND `VARIETY`='Flower Ac'")
       tamarindfruit=cur.fetchall()
       tamarindfruit=list(tamarindfruit)
+      mark["tamarindfruit_com"]=tamarindfruit[0]['COMMODITY']
+      mark["tamarindfruit_min"]=tamarindfruit[0]['MIN_PRICE']
+      mark["tamarindfruit_max"]=tamarindfruit[0]['MAX_PRICE']
+      mark["tamarindfruit_model"]=tamarindfruit[0]['MODAL_PRICE']
     if(z==1):   
       cur.execute("SELECT * FROM `%s` WHERE `COMMODITY`='Cotton'AND `VARIETY`='MCU 5'"%d)
       cotton=cur.fetchall()
       cotton=list(cotton)
+      mark["cotton_com"]=cotton[0]['COMMODITY']
+      mark["cotton_min"]=cotton[0]['MIN_PRICE']
+      mark["cotton_max"]=cotton[0]['MAX_PRICE']
+      mark["cotton_model"]=cotton[0]['MODAL_PRICE']
     else:
       cur.execute("SELECT * FROM `updatetables` WHERE `COMMODITY`='Cotton'AND `VARIETY`='MCU 5'")
       cotton=cur.fetchall()
       cotton=list(cotton)
+      mark["cotton_com"]=cotton[0]['COMMODITY']
+      mark["cotton_min"]=cotton[0]['MIN_PRICE']
+      mark["cotton_max"]=cotton[0]['MAX_PRICE']
+      mark["cotton_model"]=cotton[0]['MODAL_PRICE']
 
 #==============vegitables=============
     if(z==1):   
       cur.execute("SELECT * FROM `%s` WHERE `COMMODITY`='Tomato'AND `VARIETY`='Local'"%d)
       tomato=cur.fetchall()
       tomato=list(tomato)
+      mark["tomato_com"]=tomato[0]['COMMODITY']
+      mark["tomato_min"]=tomato[0]['MIN_PRICE']
+      mark["tomato_max"]=tomato[0]['MAX_PRICE']
+      mark["tomato_model"]=tomato[0]['MODAL_PRICE']
     else:
       cur.execute("SELECT * FROM `updatetables` WHERE `COMMODITY`='Tomato'AND `VARIETY`='Local'")
       tomato=cur.fetchall()
       tomato=list(tomato)
+      mark["tomato_com"]=tomato[0]['COMMODITY']
+      mark["tomato_min"]=tomato[0]['MIN_PRICE']
+      mark["tomato_max"]=tomato[0]['MAX_PRICE']
+      mark["tomato_model"]=tomato[0]['MODAL_PRICE']
     if(z==1):   
       cur.execute("SELECT * FROM `%s` WHERE `COMMODITY`='Banana - Green'AND `VARIETY`='Banana - Green'"%d)
       banana=cur.fetchall()
       banana=list(banana)
+      mark["banana_com"]=banana[0]['COMMODITY']
+      mark["banana_min"]=banana[0]['MIN_PRICE']
+      mark["banana_max"]=banana[0]['MAX_PRICE']
+      mark["banana_model"]=banana[0]['MODAL_PRICE']
     else:
       cur.execute("SELECT * FROM `updatetables` WHERE `COMMODITY`='Banana - Green'AND `VARIETY`='Banana - Green'")
       banana=cur.fetchall()
       banana=list(banana)
+      mark["banana_com"]=banana[0]['COMMODITY']
+      mark["banana_min"]=banana[0]['MIN_PRICE']
+      mark["banana_max"]=banana[0]['MAX_PRICE']
+      mark["banana_model"]=banana[0]['MODAL_PRICE']
     if(z==1):   
       cur.execute("SELECT * FROM `%s` WHERE `COMMODITY`='Coconut'AND `VARIETY`='Coconut'"%d)
       Coconut=cur.fetchall()
       Coconut=list(Coconut)
+      mark["Coconut_com"]=Coconut[0]['COMMODITY']
+      mark["Coconut_min"]=Coconut[0]['MIN_PRICE']
+      mark["Coconut_max"]=Coconut[0]['MAX_PRICE']
+      mark["Coconut_model"]=Coconut[0]['MODAL_PRICE']
     else:
       cur.execute("SELECT * FROM `updatetables` WHERE `COMMODITY`='Coconut'AND `VARIETY`='Coconut'")
       Coconut=cur.fetchall()
       Coconut=list(Coconut)
+      mark["Coconut_com"]=Coconut[0]['COMMODITY']
+      mark["Coconut_min"]=Coconut[0]['MIN_PRICE']
+      mark["Coconut_max"]=Coconut[0]['MAX_PRICE']
+      mark["Coconut_model"]=Coconut[0]['MODAL_PRICE']
     if(z==1):   
       cur.execute("SELECT * FROM `%s` WHERE `COMMODITY`='Onion'AND `VARIETY`='Local'"%d)
       Onion=cur.fetchall()
       Onion=list(Onion)
+      mark["Onion_com"]=Onion[0]['COMMODITY']
+      mark["Onion_min"]=Onion[0]['MIN_PRICE']
+      mark["Onion_max"]=Onion[0]['MAX_PRICE']
+      mark["Onion_model"]=Onion[0]['MODAL_PRICE']
     else:
       cur.execute("SELECT * FROM `updatetables` WHERE `COMMODITY`='Onion'AND `VARIETY`='Local'")
       Onion=cur.fetchall()
       Onion=list(Onion)
+      mark["Onion_com"]=Onion[0]['COMMODITY']
+      mark["Onion_min"]=Onion[0]['MIN_PRICE']
+      mark["Onion_max"]=Onion[0]['MAX_PRICE']
+      mark["Onion_model"]=Onion[0]['MODAL_PRICE']
     if(z==1):   
       cur.execute("SELECT * FROM `%s` WHERE `COMMODITY`='Papaya'AND `VARIETY`='Papaya'"%d)
       Papaya=cur.fetchall()
       Papaya=list(Papaya)
+      mark["Papaya_com"]=Papaya[0]['COMMODITY']
+      mark["Papaya_min"]=Papaya[0]['MIN_PRICE']
+      mark["Papaya_max"]=Papaya[0]['MAX_PRICE']
+      mark["Papaya_model"]=Papaya[0]['MODAL_PRICE']
     else:
       cur.execute("SELECT * FROM `updatetables` WHERE `COMMODITY`='Papaya'AND `VARIETY`='Papaya'")
       Papaya=cur.fetchall()
       Papaya=list(Papaya)
+      mark["Papaya_com"]=Papaya[0]['COMMODITY']
+      mark["Papaya_min"]=Papaya[0]['MIN_PRICE']
+      mark["Papaya_max"]=Papaya[0]['MAX_PRICE']
+      mark["Papaya_model"]=Papaya[0]['MODAL_PRICE']
+
+    form=LoginForm(request.form)
+    if request.method == 'POST' and form.validate():
+      username=form.username.data
+      password=form.password.data
+      
+      print (username, password)
+      return render_template('home1.html')
 #================milk
 #====endmilk========
  
@@ -898,8 +1012,8 @@ def scrape12():
 
        #close connection
     cur.close()
-
-    return render_template('index1.html',l=l,a1=a1,rv=rv,dt=dt,paddy=paddy,groundnut=groundnut,Chillies=Chillies,cotton=cotton,tamarindfruit=tamarindfruit,Papaya=Papaya,Onion=Onion,tomato=tomato,banana=banana,Coconut=Coconut)           
+    
+    return render_template('index1.html',l=l,a1=a1,rv=rv,dt=dt,mark=mark,form=form)           
     
     # return render_template('index.html')
 

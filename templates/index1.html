@@ -23,10 +23,11 @@
           <header class="w3-container w3-theme w3-center">
             <h3 class="w3-text-white">Login</h3>
           </header>
-          <form class="w3-container" action="/login">
+          {% from "includes/_formhelper.html" import render_field %}
+          <form method="POST" class="w3-container" action="/log">
             <div class="w3-section">
-              <input class="w3-input w3-border w3-margin-bottom w3-opacity-min" type="text" placeholder="Enter Username" name="usrname" required>
-              <input class="w3-input w3-border w3-opacity-min" type="password" placeholder="Enter Password" name="psw" required>
+              {{render_field(form.username, class_="w3-input w3-border w3-margin-bottom w3-opacity-min", placeholder="Enter Username")}}
+              {{render_field(form.password, class_="w3-input w3-border w3-opacity-min", placeholder="Enter Password")}}
               <button class="w3-button w3-block pdb10 w3-section w3-themeo-d1 w3-text-white w3-hover-theme" type="submit">Login</button>
             </div>
           </form>
@@ -146,34 +147,34 @@
                         <center><th>DELECT</th></center> -->
                       </tr>  
                       <tr>
-                        <td class="w3-themeo"><center><b>{{paddy[0]['COMMODITY']}}</b></center></td>  
-                        <td><center><b>{{paddy[0]['MIN_PRICE']}}</b></center></td>
-                        <td><center><b>{{paddy[0]['MAX_PRICE']}}</b></center></td>
-                        <td><center><b>{{paddy[0]['MODAL_PRICE']}}</b></center></td>
+                        <td class="w3-themeo"><center><b>{{mark['paddy_com']}}</b></center></td>  
+                        <td><center><b>{{mark['paddy_min']}}></center></td>
+                        <td><center><b>{{mark['paddy_max']}}</b></center></td>
+                        <td><center><b>{{mark['paddy_model']}}</b></center></td>
                       </tr>
                       <tr>
-                        <td class="w3-themeo"><center><b>{{groundnut[0]['COMMODITY']}}</b></center></td>  
-                        <td><center><b>{{groundnut[0]['MIN_PRICE']}}</b></center></td>
-                        <td><center><b>{{groundnut[0]['MAX_PRICE']}}</b></center></td>
-                        <td><center><b>{{groundnut[0]['MODAL_PRICE']}}</b></center></td>
+                        <td class="w3-themeo"><center><b>{{mark['groundnut_com']}}</b></center></td>  
+                        <td><center><b>{{mark['groundnut_min']}}</b></center></td>
+                        <td><center><b>{{mark['groundnut_max']}}</b></center></td>
+                        <td><center><b>{{mark['groundnut_model']}}</b></center></td>
                       </tr>
                       <tr>
-                        <td class="w3-themeo"><center><b>{{Chillies[0]['COMMODITY']}}</b></center></td>  
-                        <td><center><b>{{Chillies[0]['MIN_PRICE']}}</b></center></td>
-                        <td><center><b>{{Chillies[0]['MAX_PRICE']}}</b></center></td>
-                        <td><center><b>{{Chillies[0]['MODAL_PRICE']}}</b></center></td>
+                        <td class="w3-themeo"><center><b>{{mark['Chillies_com']}}</b></center></td>  
+                        <td><center><b>{{mark['Chillies_min']}}</b></center></td>
+                        <td><center><b>{{mark['Chillies_max']}}</b></center></td>
+                        <td><center><b>{{mark['Chillies_model']}}</b></center></td>
                       </tr>
                       <tr>
-                        <td class="w3-themeo"><center><b>{{cotton[0]['COMMODITY']}}</b></center></td>  
-                        <td><center><b>{{cotton[0]['MIN_PRICE']}}</b></center></td>
-                        <td><center><b>{{cotton[0]['MAX_PRICE']}}</b></center></td>
-                        <td><center><b>{{cotton[0]['MODAL_PRICE']}}</b></center></td>
+                        <td class="w3-themeo"><center><b>{{mark['cotton_com']}}</b></center></td>  
+                        <td><center><b>{{mark['cotton_min']}}</b></center></td>
+                        <td><center><b>{{mark['cotton_max']}}</b></center></td>
+                        <td><center><b>{{mark['cotton_model']}}</b></center></td>
                       </tr>
                       <tr>
-                        <td class="w3-themeo"><center><b>{{tamarindfruit[0]['COMMODITY']}}</b></center></td>  
-                        <td><center><b>{{tamarindfruit[0]['MIN_PRICE']}}</b></center></td>
-                        <td><center><b>{{tamarindfruit[0]['MAX_PRICE']}}</b></center></td>
-                        <td><center><b>{{tamarindfruit[0]['MODAL_PRICE']}}</b></center></td>
+                        <td class="w3-themeo"><center><b>{{mark['tamarindfruit_com']}}</b></center></td>  
+                        <td><center><b>{{mark['tamarindfruit_min']}}</b></center></td>
+                        <td><center><b>{{mark['tamarindfruit_max']}}</b></center></td>
+                        <td><center><b>{{mark['tamarindfruit_model']}}</b></center></td>
                       </tr>
 
                     </table></center>
@@ -197,34 +198,34 @@
                         <center><th>DELECT</th></center> -->
                       </tr>  
                       <tr>
-                        <td class="w3-themeo"><center><b>{{banana[0]['COMMODITY']}}</b></center></td>  
-                        <td><center><b>{{banana[0]['MIN_PRICE']}}</b></center></td>
-                        <td><center><b>{{banana[0]['MAX_PRICE']}}</b></center></td>
-                        <td><center><b>{{banana[0]['MODAL_PRICE']}}</b></center></td>
+                        <td class="w3-themeo"><center><b>{{mark['banana_com']}}</b></center></td>  
+                        <td><center><b>{{mark['banana_min']}}</b></center></td>
+                        <td><center><b>{{mark['banana_max']}}</b></center></td>
+                        <td><center><b>{{mark['banana_model']}}</b></center></td>
                       </tr>
                       <tr>
-                        <td class="w3-themeo"><center><b>{{Coconut[0]['COMMODITY']}}</b></center></td>  
-                        <td><center><b>{{Coconut[0]['MIN_PRICE']}}</b></center></td>
-                        <td><center><b>{{Coconut[0]['MAX_PRICE']}}</b></center></td>
-                        <td><center><b>{{Coconut[0]['MODAL_PRICE']}}</b></center></td>
+                        <td class="w3-themeo"><center><b>{{mark['Coconut_com']}}</b></center></td>  
+                        <td><center><b>{{mark['Coconut_min']}}</b></center></td>
+                        <td><center><b>{{mark['Coconut_max']}}</b></center></td>
+                        <td><center><b>{{mark['Coconut_model']}}</b></center></td>
                       </tr>
                       <tr>
-                        <td class="w3-themeo"><center><b>{{tomato[0]['COMMODITY']}}</b></center></td>  
-                        <td><center><b>{{tomato[0]['MIN_PRICE']}}</b></center></td>
-                        <td><center><b>{{tomato[0]['MAX_PRICE']}}</b></center></td>
-                        <td><center><b>{{tomato[0]['MODAL_PRICE']}}</b></center></td>
+                        <td class="w3-themeo"><center><b>{{mark['tomato_com']}}</b></center></td>  
+                        <td><center><b>{{mark['tomato_min']}}</b></center></td>
+                        <td><center><b>{{mark['tomato_max']}}</b></center></td>
+                        <td><center><b>{{mark['tomato_model']}}</b></center></td>
                       </tr>
                       <tr>
-                        <td class="w3-themeo"><center><b>{{Onion[0]['COMMODITY']}}</b></center></td>  
-                        <td><center><b>{{Onion[0]['MIN_PRICE']}}</b></center></td>
-                        <td><center><b>{{Onion[0]['MAX_PRICE']}}</b></center></td>
-                        <td><center><b>{{Onion[0]['MODAL_PRICE']}}</b></center></td>
+                        <td class="w3-themeo"><center><b>{{mark['Onion_com']}}</b></center></td>  
+                        <td><center><b>{{mark['Onion_min']}}</b></center></td>
+                        <td><center><b>{{mark['Onion_max']}}</b></center></td>
+                        <td><center><b>{{mark['Onion_model']}}</b></center></td>
                       </tr>
                       <tr>
-                        <td class="w3-themeo"><center><b>{{Papaya[0]['COMMODITY']}}</b></center></td>  
-                        <td><center><b>{{Papaya[0]['MIN_PRICE']}}</b></center></td>
-                        <td><center><b>{{Papaya[0]['MAX_PRICE']}}</b></center></td>
-                        <td><center><b>{{Papaya[0]['MODAL_PRICE']}}</b></center></td>
+                        <td class="w3-themeo"><center><b>{{mark['Papaya_com']}}</b></center></td>  
+                        <td><center><b>{{mark['Papaya_min']}}</b></center></td>
+                        <td><center><b>{{mark['Papaya_max']}}</b></center></td>
+                        <td><center><b>{{mark['Papaya_model']}}</b></center></td>
                       </tr>
 
                     </table></center>
