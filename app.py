@@ -134,9 +134,6 @@ def login():
                #app.logger.info('Passwords Matched')
                session['logged_in'] = True
                session['username'] = username
-               # print('password11',password_candidate);
-               # print('password12:',password)
-
                flash('You are now logged in','success')
                return redirect(url_for('home'))
            else:
@@ -169,77 +166,77 @@ def logout():
     flash('You are now logged out','success')
     return redirect(url_for('login'))
 
-#---------------------------------------------------------
+
 
 # ------------------------market-prices-----------------------------------
 
 
-@app.route('/market')
+# @app.route('/market')
 
 
-def market():
-    now = datetime.date.today()
-    now1=date.today() - timedelta(1)
-    a='mark_prices%s'%now
-    f='mark_prices%s'%now1
-    punctuations = '''#-'"\,'''
-    my_str = a
-    no_punct = ""
-    for char in my_str:
-       if char not in punctuations:
-           no_punct = no_punct + char
-    my_str1 = f
-    no_punct1 = ""
-    for char in my_str1:
-       if char not in punctuations:
-           no_punct1 = no_punct1 + char
-    e=no_punct1
-    d=no_punct
-    c=' TABLE ' + d
+# def market():
+#     now = datetime.date.today()
+#     now1=date.today() - timedelta(1)
+#     a='mark_prices%s'%now
+#     f='mark_prices%s'%now1
+#     punctuations = '''#-'"\,'''
+#     my_str = a
+#     no_punct = ""
+#     for char in my_str:
+#        if char not in punctuations:
+#            no_punct = no_punct + char
+#     my_str1 = f
+#     no_punct1 = ""
+#     for char in my_str1:
+#        if char not in punctuations:
+#            no_punct1 = no_punct1 + char
+#     e=no_punct1
+#     d=no_punct
+#     c=' TABLE ' + d
 
-    cur = mysql.connection.cursor()
-    cur.execute("SHOW TABLES")
-    rv1=cur.fetchall()
-    for i in range(0,len(rv1)):
-      rv2=rv1[i]['Tables_in_agmark']
-      if(str(rv2)==str(d)):
-        print(rv2,'==',d)
-        z=1
-    if(z==1):
-      print("exit")   
-      cur.execute("SELECT * FROM `%s` WHERE `COMMODITY`='Paddy'AND `VARIETY`='Paddy'"%d)
-      paddy=cur.fetchall()
-    else:
-      cur.execute("SELECT * FROM `%s` WHERE `COMMODITY`='Paddy'AND `VARIETY`='Paddy'"%e)
-      paddy=cur.fetchall()
-    print(paddy)
+#     cur = mysql.connection.cursor()
+#     cur.execute("SHOW TABLES")
+#     rv1=cur.fetchall()
+#     for i in range(0,len(rv1)):
+#       rv2=rv1[i]['Tables_in_agmark']
+#       if(str(rv2)==str(d)):
+#         print(rv2,'==',d)
+#         z=1
+#     if(z==1):
+#       print("exit")   
+#       cur.execute("SELECT * FROM `%s` WHERE `COMMODITY`='Paddy'AND `VARIETY`='Paddy'"%d)
+#       paddy=cur.fetchall()
+#     else:
+#       cur.execute("SELECT * FROM `%s` WHERE `COMMODITY`='Paddy'AND `VARIETY`='Paddy'"%e)
+#       paddy=cur.fetchall()
+#     print(paddy)
 
 
-    cur.execute("DROP TABLE IF EXISTS %s"%d)    
-    cur.execute( "CREATE %s SELECT * FROM %s"%(c,e))
-    dt=now
-    cur.execute('''SELECT * FROM %s'''%d)
-    # try:
-    #   cur.execute('''SELECT * FROM %s'''%d)
-    #   dt=now
-    #   print(1)
-    #   rv=cur.fetchall()
-    # except:
-    #   cur.execute('''SELECT * FROM %s'''%e)
-    #   dt=now1
-    #   print(2)
-    rv=cur.fetchall()
+#     cur.execute("DROP TABLE IF EXISTS %s"%d)    
+#     cur.execute( "CREATE %s SELECT * FROM %s"%(c,e))
+#     dt=now
+#     cur.execute('''SELECT * FROM %s'''%d)
+#     # try:
+#     #   cur.execute('''SELECT * FROM %s'''%d)
+#     #   dt=now
+#     #   print(1)
+#     #   rv=cur.fetchall()
+#     # except:
+#     #   cur.execute('''SELECT * FROM %s'''%e)
+#     #   dt=now1
+#     #   print(2)
+#     rv=cur.fetchall()
 
-    cur.execute("SELECT * FROM `%s` WHERE `COMMODITY`='Paddy'AND `VARIETY`='Paddy'"%d)
-    paddy=cur.fetchall()
-       #commit to DB
+#     cur.execute("SELECT * FROM `%s` WHERE `COMMODITY`='Paddy'AND `VARIETY`='Paddy'"%d)
+#     paddy=cur.fetchall()
+#        #commit to DB
 
-    mysql.connection.commit()
+#     mysql.connection.commit()
 
-       #close connection
-    cur.close()
+#        #close connection
+#     cur.close()
 
-    return render_template('admin.html',rv=rv,dt=dt,paddy=paddy)
+#     return render_template('admin.html',rv=rv,dt=dt,paddy=paddy)
 #-------------------------admin-refresh-button-----------
 @app.route('/refreshbutton')
 
@@ -273,7 +270,7 @@ def refreshbutton():
   rv1=cur.fetchall()
   print(len(rv1))
   for i in range(0,len(rv1)):
-      rv2=rv1[i]['Tables_in_flaskappdb']
+      rv2=rv1[i]['Tables_in_agmark']
       if(str(rv2)==str(d)):
         print(rv2,'==',d)
         z=1
@@ -309,23 +306,7 @@ def refreshbutton():
       
       
   return render_template('admin.html',dt=dt,rv=rv)
-     #    cur.execute('''SELECT * FROM %s'''%d)
-     #    dt=now
 
-     #    rv1=cur.fetchall()
-
-     #    cur.execute('''SELECT * FROM %s'''%e)
-  
-     #    rv2=cur.fetchall()
-
-     # #commit to DB
-
-     #    mysql.connection.commit()
-
-     # #close connection
-     #    cur.close()
-
-        # return render_template('admin.html',dt=dt,rv1=rv1,rv2=rv2)
 #-------------------------admin--refresh-----------
 @app.route('/admin')
 
@@ -415,12 +396,7 @@ def update12():
   UNITY_OF_PRICE=request.args.get('name6')
   DATE=request.args.get('name7')
   ID=request.args.get('ID')
-  print("detalies")
-  print(DISTRICT,MARKET,COMMODITY,VARIETY,UNITS,MIN_PRICE,MAX_PRICE,MODAL_PRICE,UNITY_OF_PRICE,ID)
-
-
-
-  
+    
   cur=mysql.connection.cursor()
   cur.execute("SELECT * FROM %s WHERE id=%s"%(d,ID))
   rv=cur.fetchall()
@@ -433,9 +409,6 @@ def update12():
   cur=mysql.connection.cursor()
   cur.execute("UPDATE `%s` SET `MAX_PRICE`=%s,`MIN_PRICE`=%s,`MODAL_PRICE`=%s WHERE `ID`=%s "%(d,MAX_PRICE,MIN_PRICE,MODAL_PRICE,c))
   cur.execute("UPDATE `updatetables` SET `MAX_PRICE`=%s,`MIN_PRICE`=%s,`MODAL_PRICE`=%s WHERE `ID`=%s "%(MAX_PRICE,MIN_PRICE,MODAL_PRICE,c))
-  # cur.execute("UPDATE `%s` SET `ID`=`%s`,`DISTRICT`=`%s`,`MARKET`=`%s`,`COMMODITY`=`%s`,`VARIETY`=`%s`,`UNITS`=`%s`,`MIN_PRICE`=`%s`,`MAX_PRICE`=`%s`,`MODAL_PRICE`=`%s`,`UNITY_OF_PRICE`=`%s` WHERE `ID`=%s"%(d,ID,DISTRICT,MARKET,COMMODITY,VARIETY,UNITS,MIN_PRICE,MAX_PRICE,MODAL_PRICE,UNITY_OF_PRICE,c))
-# UPDATE `mark_prices20180106` SET `ID`=ID,`DISTRICT`=DISTRICT,`MARKET`=MARKET,`COMMODITY`=COMMODITY,`VARIETY`=VARIETY,`UNITS`=UNITS,`MIN_PRICE`=MIN_PRICE,`MAX_PRICE`=MAX_PRICE,`MODAL_PRICE`=MODAL_PRICE,`UNITY_OF_PRICE`=UNITY_OF_PRICE WHERE `ID`=ID
-# UPDATE `mark_prices20180106` SET `ID`=`%s`,`DISTRICT`=`%s`,`MARKET`=`%s`,`COMMODITY`=`%s`,`VARIETY`=`%s`,`UNITS`=`%s`,`MIN_PRICE`=`%s`,`MAX_PRICE`=`%s`,`MODAL_PRICE`=`%s`,`UNITY_OF_PRICE`=`%s` WHERE `ID`=`%s`
   
   mysql.connection.commit()
 
@@ -676,79 +649,6 @@ def log():
     return render_template('home1.html')
   return render_template('index1.html', form=form,l=l,a1=a1,dt=dt,mark=mark)
 
-# #--------------------------foodprocesser register-----------------------
-
-# class RegisterForm1(Form):
-#   name=StringField('Name',[validators.Length(min=1,max=50)])
-#   mobile = StringField('mobile',[validators.Length(min=10,max =13 )])
-#   email=StringField('Email',[validators.Length(min=2,max=50)])
-#   # course = SelectField(u'Course', choices=courseList)
-  
-
-
-# @app.route('/register12', methods = ['GET', 'POST'])
-
-
-# def register12():
-#    form = RegisterForm1(request.form)
-#    print("h2")
-#    if request.method == 'POST' and form.validate():
-#        print("h3")
-#        name = form.name.data
-#        mobile = form.mobile.data
-#        email = form.email.data  
-#        course = form.course.data
-
-#        status = 'register12'
-#        cur = mysql.connection.cursor()
-
-#        cur.execute("INSERT INTO register1s(name,email,mobile,course) VALUES(%s, %s, %s, %s)",(name,email,mobile,course))
-#        cur.execute("INSERT INTO logins(username,password,status) VALUES(%s, %s, %s)",(name,email,status))
-#        #commit to DB
-
-#        mysql.connection.commit()
-
-#        #close connection
-#        cur.close()
-       
-#        return render_template('home.html')
-
-#    return render_template('register1.html',form = form)
-
-
-# #---------------------------wearhouse------------------
-# class RegisterForm2(Form):
-#   name=StringField('Name',[validators.Length(min=1,max=50)])
-#   mobile = StringField('mobile',[validators.Length(min=10,max =13 )])
-#   email=StringField('Email',[validators.Length(min=2,max=50)])
-  
-
-# @app.route('/register2', methods = ['GET', 'POST'])
-
-# def register2():
-#    form = RegisterForm2(request.form)
-#    if request.method == 'POST' and form.validate(): 
-#        name = form.name.data
-#        mobile = form.mobile.data
-#        email = form.email.data  
-#        status = 'register2'
-#        cur = mysql.connection.cursor()
-
-#        cur.execute("INSERT INTO register2s(name,email,mobile) VALUES(%s, %s, %s)",(name,email,mobile))
-#        cur.execute("INSERT INTO logins(username,password,status) VALUES(%s, %s, %s)",(name,email,status))
-#        #commit to DB
-
-#        mysql.connection.commit()
-
-#        #close connection
-#        cur.close()
-       
-#        return redirect(url_for('home'))
-
-#    return render_template('register2.html',form = form)
-
-
-
 
 # -----------------------------Login/logout-------------------------------- 
 
@@ -842,7 +742,7 @@ def scrape12():
       mark["paddy_max"]=paddy[0]['MAX_PRICE']
       mark["paddy_model"]=paddy[0]['MODAL_PRICE']
     else:
-      cur.execute("SELECT * FROM `updatetables` WHERE `COMMODITYITY`='Paddy'AND `VARIETY`='Paddy'")
+      cur.execute("SELECT * FROM `updatetables` WHERE `COMMODITY`='Paddy'AND `VARIETY`='Paddy'")
       paddy=cur.fetchall()
       paddy=list(paddy)
       mark["paddy_com"]=paddy[0]['COMMODITY']
@@ -1111,79 +1011,6 @@ def register():
    return render_template('register.html',form = form)
 
 
-# #--------------------------foodprocesser register-----------------------
-
-# class RegisterForm1(Form):
-#   name=StringField('Name',[validators.Length(min=1,max=50)])
-#   mobile = StringField('mobile',[validators.Length(min=10,max =13 )])
-#   email=StringField('Email',[validators.Length(min=2,max=50)])
-#   course = SelectField(u'Course', choices=courseList)
-  
-
-
-# @app.route('/register12', methods = ['GET', 'POST'])
-
-
-# def register12():
-#    form = RegisterForm1(request.form)
-#    print("h2")
-#    if request.method == 'POST' and form.validate():
-#        print("h3")
-#        name = form.name.data
-#        mobile = form.mobile.data
-#        email = form.email.data  
-#        course = form.course.data
-
-#        status = 'register12'
-#        cur = mysql.connection.cursor()
-
-#        cur.execute("INSERT INTO register1s(name,email,mobile,course) VALUES(%s, %s, %s, %s)",(name,email,mobile,course))
-#        cur.execute("INSERT INTO logins(username,password,status) VALUES(%s, %s, %s)",(name,email,status))
-#        #commit to DB
-
-#        mysql.connection.commit()
-
-#        #close connection
-#        cur.close()
-       
-#        return render_template('home.html')
-
-#    return render_template('register1.html',form = form)
-
-
-# #---------------------------wearhouse------------------
-# class RegisterForm2(Form):
-#   name=StringField('Name',[validators.Length(min=1,max=50)])
-#   mobile = StringField('mobile',[validators.Length(min=10,max =13 )])
-#   email=StringField('Email',[validators.Length(min=2,max=50)])
-  
-
-# @app.route('/register2', methods = ['GET', 'POST'])
-
-# def register2():
-#    form = RegisterForm2(request.form)
-#    if request.method == 'POST' and form.validate(): 
-#        name = form.name.data
-#        mobile = form.mobile.data
-#        email = form.email.data  
-#        status = 'register2'
-#        cur = mysql.connection.cursor()
-
-#        # cur.execute("INSERT INTO register2s(name,email,mobile) VALUES(%s, %s, %s)",(name,email,mobile))
-#        # cur.execute("INSERT INTO logins(username,password,status) VALUES(%s, %s, %s)",(name,email,status))
-#        cur.execute("INSERT INTO logins(username,status) VALUES(%s,%s)",(name,status))
-#        #commit to DB
-
-#        mysql.connection.commit()
-
-#        #close connection
-#        cur.close()
-       
-#        return redirect(url_for('home'))
-
-#    return render_template('register2.html',form = form)
-
-
 #------------currentpage--------------------
 @app.route('/currentstatus')
 
@@ -1193,14 +1020,6 @@ def currentstatus():
   cur.execute('''SELECT * FROM registers''')
   rv=cur.fetchall()
   return render_template('currentstatus.html',rv=rv)
-
-
-#-------login 6 tables------------------------------------------
-
-
-#---------------------------------------------------------
-
-
 
 if __name__=='__main__':
   app.secret_key = os.urandom(12)
