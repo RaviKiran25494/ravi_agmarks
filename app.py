@@ -102,72 +102,6 @@ def services_logistics():
 
 #-------------------------end static routes----------------------
 #-----------------------------login-login-------------------
-
-#-----------------------------------------login----------------
-@app.route('/login',methods = ['GET','POST'])
-def login():
-   if request.method == 'POST':
-       #get form fields
-
-       username = request.form['username']
-       password_candidate = request.form['password']
-
-       # Create cursor
-       cur = mysql.connection.cursor()
-
-       # get user by username
-
-       result = cur.execute("SELECT * FROM users WHERE username = %s",[username])
-       print('name:',username)
-       if result > 0:
-
-           data = cur.fetchone()
-           password = data['password']
-
-           # print('password1',password1);
-           print('password:',password_candidate)
-
-           # if sha256_crypt.verify(password_candidate,password):
-           if (password_candidate==password):
-
-
-               #app.logger.info('Passwords Matched')
-               session['logged_in'] = True
-               session['username'] = username
-               flash('You are now logged in','success')
-               return redirect(url_for('home'))
-           else:
-               error = 'Invalid Login'
-               #app.logger.info('Passwords Not matched')
-               return render_template('login.html',error=error)
-           # close connection
-           cur.close()
-       else:
-           #app.logger.info('No user')
-           error:'Username not found'
-           return render_template('login.html',error=error)
-
-   return render_template('login.html')
-def is_logged_in(f):
-   @wraps(f)
-   def wrap(*args, **kwargs):
-       if 'logged_in' in session:
-           return f(*args, **kwargs)
-       else:
-           flash('Unauthorized, Please Login','danger')
-           return redirect(url_for('login'))
-   return wrap
-
-   return render_template('login.html')
-# Logout
-@app.route('/logout')
-def logout():
-    session.clear()
-    flash('You are now logged out','success')
-    return redirect(url_for('login'))
-
-
-
 # ------------------------market-prices-----------------------------------
 
 
@@ -465,7 +399,24 @@ def farmerregistration():
     farmerVillage=form.village.data
     farmerTaluka=form.taluka.data
     farmerPincode=form.pincode.data
-    print (farmerFirstname, farmerLastname, farmerDateofBirth, farmerEmail, farmerContactNumber, farmeraadharNumber, farmerAddress, farmerCroptype, farmerAnimalHusbandryType, farmerDairyform, farmerState, farmerDistrict, farmerVillage, farmerTaluka, farmerPincode)
+    status="farmer"
+    print(len(farmerCroptype))
+
+    cur = mysql.connection.cursor()
+
+    
+     #commit to DB
+    cur.execute("INSERT INTO `far_regs`(`far_first`, `far_last`, `far_dob`, `far_email`, `far_mobile`, `far_aadher`, `far_add`, `far_state`, `far_dist`, `far_village`, `far_taluka`, `far_pin`) VALUES(%s, %s, %s, %s,%s, %s, %s, %s,%s, %s, %s,%s)",(farmerFirstname,farmerLastname,farmerDateofBirth,farmerEmail,farmerContactNumber,farmeraadharNumber,farmerAddress,farmerState,farmerDistrict,farmerVillage,farmerTaluka,farmerPincode))
+    cur.execute("INSERT INTO `users`(`name`, `email`, `mobile`, `status`)VALUES(%s, %s, %s, %s)",(farmerFirstname,farmerEmail,farmerContactNumber,status))
+
+    mysql.connection.commit()
+
+     #close connection
+    cur.close()
+    
+
+    flash('Thank you for register')
+
     return render_template('home1.html')
   return render_template('far_reg1.html', form=form)
 
@@ -645,9 +596,62 @@ def log():
   form=LogForm(request.form)
   if request.method == 'POST' and form.validate():
     username=form.username.data
-    password=form.password.data
-    return render_template('home1.html')
+    password_candidate=form.password.data
+
+    cur = mysql.connection.cursor()
+
+       # get user by username
+
+    result = cur.execute("SELECT * FROM users WHERE name = %s",[username])
+    print('name:',username)
+    if result > 0:
+
+        data = cur.fetchone()
+        password = data['status']
+
+         # print('password1',password1);
+        print('password:',password_candidate)
+
+         # if sha256_crypt.verify(password_candidate,password):
+        if (password_candidate==password):
+
+
+             #app.logger.info('Passwords Matched')
+            session['logged_in'] = True
+            session['username'] = username
+             # print('password11',password_candidate);
+             # print('password12:',password)
+
+            flash('You are now logged in','success')
+            return render_template('home1.html')
+        else:
+            error = 'Invalid Login'
+             #app.logger.info('Passwords Not matched')
+            return render_template('index1.html', form=form,l=l,a1=a1,dt=dt,mark=mark,error=error)
+         # close connection
+        cur.close()
+    else:
+         #app.logger.info('No user')
+        error:'Username not found'
   return render_template('index1.html', form=form,l=l,a1=a1,dt=dt,mark=mark)
+def is_logged_in(f):
+   @wraps(f)
+   def wrap(*args, **kwargs):
+       if 'logged_in' in session:
+           return f(*args, **kwargs)
+       else:
+           flash('Unauthorized, Please Login','danger')
+           return redirect(url_for('scrape12'))
+   return wrap
+
+   return render_template('index1.html', form=form,l=l,a1=a1,dt=dt,mark=mark)
+#Logout
+@app.route('/logout')
+def logout():
+    session.clear()
+    flash('You are now logged out','success')
+    return redirect(url_for('scrape12'))
+
 
 
 # -----------------------------Login/logout-------------------------------- 
@@ -730,7 +734,7 @@ def scrape12():
       dt=now
       rv=cur.fetchall()
     else:
-      cur.execute('''SELECT * FROM %s'''%e)
+      cur.execute('''SELECT * FROM `updatetables`''')
       rv=cur.fetchall()
       dt=now1
     if(z==1):   

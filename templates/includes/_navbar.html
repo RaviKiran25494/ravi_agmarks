@@ -48,16 +48,18 @@
                     <div class="navigation">
                         <div id="navigation">
                             <ul>
-                                <li class="active"><a href="/" title="Home"> <i class="fa fa-home w3-large "></i></a></li>
+                                <li class="active w3-theme w3-round-medium "><a href="/" title="Home"> <i class="fa fa-home w3-text-white"></i></a></li>
+                                <li>&nbsp;</li>
                               
-                                <li class="has-sub"><a href="#" title="Service">Services</a>
+                                <li class="has-sub w3-theme w3-round-medium"><a href="#" title="Service" class=" w3-text-white">Services</a>
                                     <ul>
                                         <li><a href="/services_agri">Agriculture Commodites</a></li>
                                         <li><a href="/services_animal_hary"> Animal Husbandy</a></li>
                                         <li><a href="/services_dairy">Dairy Farming</a></li>
                                     </ul>
                                 </li>
-                                <li class="has-sub"><a href="#" title="Service">BENEFITS</a>
+                                <li>&nbsp;</li>
+                                <li class="has-sub w3-theme w3-round-medium"><a href="#" title="Service" class=" w3-text-white">BENEFITS</a>
                                     <ul>
                                         <li><a href="benefits_farmer">Farmers</a></li>
                                         <li><a href="/benefits_process"> Processor</a></li>
@@ -67,17 +69,31 @@
                                         <li><a href="/benefits_logistics">Logistics</a></li>
                                     </ul>
                                 </li>
-                                <li><a href="/about">ABOUT</a></li>
-                                <li><a href="/contact_us">Contact Us</a> </li>
-                                <li><a href="/how_to_reg">How to Register</a> </li>
-                                <li class="has-sub"><a href="#">Help</a>
+                                <li>&nbsp;</li>
+                                <li class="w3-theme w3-round-medium"><a href="/about" class=" w3-text-white">ABOUT</a></li>
+                                <li>&nbsp;</li>
+                                <li class="w3-theme w3-round-medium"><a href="/contact_us" class=" w3-text-white">Contact Us</a> </li>
+                                <li>&nbsp;</li>
+                                <li class="w3-theme w3-round-medium"><a href="/how_to_reg" class=" w3-text-white">How to Register</a> </li>
+                                <li>&nbsp;</li>
+                                <li class="has-sub w3-theme w3-round-medium"><a href="#" class=" w3-text-white">Help</a>
                                     <ul>
                                         <li><a href="/faq">FAQ</a></li>
                                     </ul>
                                 </li>
+                                <li>&nbsp;</li>
                                 
                                <!--  <li><a href="/admin">admin</a></li> -->
                             </ul>
+                            <ul class="nav navbar-nav navbar-right">
+                            {% if session.logged_in %}
+                              <li><a href="">{{session['username'] }}</a></li>
+                              <li><a href="/logout">Logout</a></li>
+                            {% else %}
+                             <!--  <li><a href="/register">Register</a></li> -->
+                              <li><a href="#">Login</a></li>
+                            {% endif %}
+                          </ul>
                         </div>
                     </div>
                 </div>
