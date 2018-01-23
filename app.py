@@ -399,14 +399,15 @@ def farmerregistration():
     farmerVillage=form.village.data
     farmerTaluka=form.taluka.data
     farmerPincode=form.pincode.data
+    selectedCropType="_".join(farmerCroptype)
+    selectedAnimalHusbandryType="_".join(farmerAnimalHusbandryType)
+    selectedDairyform="_".join(farmerDairyform)
     status="farmer"
     print(len(farmerCroptype))
 
-    cur = mysql.connection.cursor()
-
-    
+    cur = mysql.connection.cursor()    
      #commit to DB
-    cur.execute("INSERT INTO `far_regs`(`far_first`, `far_last`, `far_dob`, `far_email`, `far_mobile`, `far_aadher`, `far_add`, `far_state`, `far_dist`, `far_village`, `far_taluka`, `far_pin`) VALUES(%s, %s, %s, %s,%s, %s, %s, %s,%s, %s, %s,%s)",(farmerFirstname,farmerLastname,farmerDateofBirth,farmerEmail,farmerContactNumber,farmeraadharNumber,farmerAddress,farmerState,farmerDistrict,farmerVillage,farmerTaluka,farmerPincode))
+    cur.execute("INSERT INTO `far_regs`(`far_first`, `far_last`, `far_dob`, `far_email`, `far_mobile`, `far_aadher`, `far_add`, `far_state`, `far_dist`, `far_village`, `far_taluka`, `far_pin`, `far_croptype`, `far_ani_hus`, `far_dairy`) VALUES(%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)",(farmerFirstname,farmerLastname,farmerDateofBirth,farmerEmail,farmerContactNumber,farmeraadharNumber,farmerAddress,farmerState,farmerDistrict,farmerVillage,farmerTaluka,farmerPincode, selectedCropType, selectedAnimalHusbandryType, selectedCropType))
     cur.execute("INSERT INTO `users`(`name`, `email`, `mobile`, `status`)VALUES(%s, %s, %s, %s)",(farmerFirstname,farmerEmail,farmerContactNumber,status))
 
     mysql.connection.commit()
