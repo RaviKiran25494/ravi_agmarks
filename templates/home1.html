@@ -12,7 +12,8 @@
  -->
  <div class="container">  
   <h2>Registation</h2>  
-  
+  <button class="btn btn-default one" type="button">farmer</button>
+  <button class="btn btn-default two" type="button">processor</button>
   <div class="dropdown">  
     <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">Registation  
     <span class="caret"></span></button>  
@@ -43,8 +44,8 @@ $(".one").click(function()
 });  
 $(".two").click(function()  
 {  
-   $.get("farmer_reg",function(data){
-    $(".modal-body").html(data);
+   $.get("farmerregistration",function(data){
+    $(".container-right").html(data);
     });
         
 });

@@ -102,6 +102,70 @@ def services_logistics():
 
 #-------------------------end static routes----------------------
 #-----------------------------login-login-------------------
+@app.route('/login1',methods = ['GET','POST'])
+def login1():
+   if request.method == 'POST':
+       #get form fields
+
+       username = request.form['username']
+       password_candidate = request.form['password']
+
+       # Create cursor
+       cur = mysql.connection.cursor()
+
+       # get user by username
+
+       result = cur.execute("SELECT * FROM users WHERE name = %s",[username])
+       print('name:',username)
+       if result > 0:
+
+           data = cur.fetchone()
+           password = data['status']
+
+           # print('password1',password1);
+           print('password:',password_candidate)
+
+           # if sha256_crypt.verify(password_candidate,password):
+           if (password_candidate==password):
+
+
+               #app.logger.info('Passwords Matched')
+               session['logged_in'] = True
+               session['username'] = username
+               # print('password11',password_candidate);
+               # print('password12:',password)
+
+               flash('You are now logged in','success')
+               return redirect(url_for('scrape12'))
+           else:
+               error = 'Invalid Login'
+               #app.logger.info('Passwords Not matched')
+               return render_template('login1.html',error=error)
+           # close connection
+           cur.close()
+       else:
+           #app.logger.info('No user')
+           error:'Username not found'
+           return render_template('login1.html',error=error)
+
+   return render_template('login1.html')
+def is_logged_in1(f):
+   @wraps(f)
+   def wrap(*args, **kwargs):
+       if 'logged_in1' in session:
+           return f(*args, **kwargs)
+       else:
+           flash('Unauthorized, Please Login','danger')
+           return redirect(url_for('login1'))
+   return wrap
+
+   return render_template('login1.html')
+# Logout
+@app.route('/logout1')
+def logout1():
+    session.clear()
+    flash('You are now logged out','success')
+    return redirect(url_for('login1'))
 # ------------------------market-prices-----------------------------------
 
 
@@ -365,14 +429,14 @@ class FarmerRegistrationForm(Form):
             validators.DataRequired(),
             validators.EqualTo('confirmcontactnumber', message='Contact Number didn\'t match')
         ])
-  aadharNumber=StringField('Aadhar number',[validators.Length(min=1,max=16)]) 
+  aadharNumber=StringField('Aadhar number',[validators.Length(min=1,max=16)])
   address=StringField(u'Address of the Unit',[validators.Length(min=1,max=200)])
   photo = FileField(u'Photo')
   croptype = SelectMultipleField(u'', choices=[('Paddy','Paddy'), ('Wheat', 'Wheat'), ('Cotton', 'Cotton'), ('Mirchi', 'Mirchi'), ('Vegetables', 'Vegetables')], option_widget=widgets.CheckboxInput(),
         widget=widgets.ListWidget(prefix_label=False))
   animalhusbandrytype = SelectMultipleField(u'', choices=[('Cattle','Cattle'), ('Fish', 'Fish'), ('Poultry', 'Poultry'), ('Goat', 'Goat'), ('Sheep', 'Sheep')], option_widget=widgets.CheckboxInput(),
         widget=widgets.ListWidget(prefix_label=False))
-  dairyform = SelectMultipleField(u'', choices=[('Milk','Milk'), ('Ghee', 'Ghee'), ('Butter', 'Butter'), ('Cheese', 'Cheese'), ('Milk Powder', 'Milk Powder')], option_widget=widgets.CheckboxInput(),
+  dairyform = SelectMultipleField(u'', choices=[('Cow Milk','Cow Milk'), ('Buffalo Milk', 'Buffalo Milk'), ('Goat Milk', 'Goat Milk')], option_widget=widgets.CheckboxInput(),
         widget=widgets.ListWidget(prefix_label=False))
   state = SelectField(u'Choose your State', choices=[('None','None'),('Andhra Pradesh','Andhra Pradesh'),('Telangana','Telangana')])
   district = SelectField(u'District', choices=[('None','None'),('Anantapur','Anantapur'),('Chittoor','Chittoor'),('East Godavari','East Godavari'),('Guntur','Guntur'),('Krishna','Krishna'),('Kurnool','Kurnool'),('Nellore','Nellore'),('Prakasam','Prakasam'),('Srikakulam','Srikakulam'),('Visakhapatnam','Visakhapatnam'),('Vizianagaram','Vizianagaram'),('West Godavari','West Godavari'),('YSR Kadapa','YSR Kadapa'),])
@@ -387,7 +451,7 @@ def farmerregistration():
     farmerFirstname=form.firstName.data
     farmerLastname=form.lastName.data
     farmerDateofBirth=form.dateofBirth.data
-    farmerEmail=form.email.data
+    # farmerEmail=form.email.data
     farmerContactNumber=form.contactnumber.data
     farmeraadharNumber=form.aadharNumber.data
     farmerAddress=form.address.data
@@ -399,26 +463,25 @@ def farmerregistration():
     farmerVillage=form.village.data
     farmerTaluka=form.taluka.data
     farmerPincode=form.pincode.data
+    selectedCropType="_".join(farmerCroptype)
+    selectedAnimalHusbandryType="_".join(farmerAnimalHusbandryType)
+    selectedDairyform="_".join(farmerDairyform)
     status="farmer"
-    print(len(farmerCroptype))
-
     cur = mysql.connection.cursor()
-
-    
      #commit to DB
-    cur.execute("INSERT INTO `far_regs`(`far_first`, `far_last`, `far_dob`, `far_email`, `far_mobile`, `far_aadher`, `far_add`, `far_state`, `far_dist`, `far_village`, `far_taluka`, `far_pin`) VALUES(%s, %s, %s, %s,%s, %s, %s, %s,%s, %s, %s,%s)",(farmerFirstname,farmerLastname,farmerDateofBirth,farmerEmail,farmerContactNumber,farmeraadharNumber,farmerAddress,farmerState,farmerDistrict,farmerVillage,farmerTaluka,farmerPincode))
-    cur.execute("INSERT INTO `users`(`name`, `email`, `mobile`, `status`)VALUES(%s, %s, %s, %s)",(farmerFirstname,farmerEmail,farmerContactNumber,status))
+    cur.execute("INSERT INTO `far_regs`(`far_first`, `far_last`, `far_dob`, `far_mobile`, `far_aadher`, `far_add`, `far_state`, `far_dist`, `far_village`, `far_taluka`, `far_pin`, `far_croptype`, `far_ani_hus`, `far_dairy`) VALUES(%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)",(farmerFirstname,farmerLastname,farmerDateofBirth,farmerContactNumber,farmeraadharNumber,farmerAddress,farmerState,farmerDistrict,farmerVillage,farmerTaluka,farmerPincode, selectedCropType, selectedAnimalHusbandryType, selectedDairyform))
+    cur.execute("INSERT INTO `users`(`name`, `mobile`, `status`)VALUES(%s, %s, %s)",(farmerFirstname,farmerContactNumber,status))
 
     mysql.connection.commit()
 
      #close connection
     cur.close()
-    
+
 
     flash('Thank you for register')
 
     return render_template('home1.html')
-  return render_template('far_reg1.html', form=form)
+  return render_template('far_reg.html', form=form)
 
 
 # -------------------Food Processor Registration-------------------------
@@ -460,6 +523,17 @@ def foodprocesserregistration():
     FPRcontactnumber=form.contactnumber.data
     FPRgstnumber=form.gstnumber.data
     FPRemail=form.email.data
+    FPRmaterialprocures=form.materialprocures.data
+    selectedProcureMaterial="_".join(FPRmaterialprocures)
+    FPRstatus="processor"
+    cur = mysql.connection.cursor()
+     #commit to DB
+    cur.execute("INSERT INTO `processor_reg`(`proc_name`, `proc_company`, `proc_unit_addr`, `proc_state`, `proc_district`, `proc_village`, `proc_taluka`, `proc_pincode`, `proc_yearofincorp`, `proc_gstnum`, `proc_contactnum`, `proc_mail`, `proc_procurematerial`) VALUES(%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)",(FPRfullname, FPRcompanyname, FPRcompanyaddress, FPRstate, FPRdistrict, FPRvillage, FPRtaluka, FPRpincode, FPRyearofIncorporation, FPRgstnumber, FPRcontactnumber, FPRemail, selectedProcureMaterial))
+    cur.execute("INSERT INTO `users`(`name`, `email`, `mobile`, `status`)VALUES(%s, %s, %s, %s)",(FPRfullname,FPRemail,FPRcontactnumber,FPRstatus))
+    mysql.connection.commit()
+     #close connection
+    cur.close()
+    flash('Thank you for register')
     print (FPRfullname, FPRcompanyname, FPRcompanyaddress, FPRstate, FPRdistrict, FPRdistrict, FPRvillage, FPRtaluka, FPRpincode, FPRyearofIncorporation, FPRgstnumber, FPRemail )
     return render_template('home1.html')
   return render_template('food_reg.html', form=form)
@@ -511,6 +585,16 @@ def warehouseregistration():
     SWRmaterialstores=form.materialstores.data
     SWRstoragecapcity=form.storagecapacity.data
     SWRquantity=form.quantity.data
+    selectedStorageMaterial="_".join(SWRmaterialstores)
+    SWRstatus="warehouse"
+    cur = mysql.connection.cursor()
+     #commit to DB
+    cur.execute("INSERT INTO `storage_reg`(`storage_fullname`, `storage_cmpname`, `storage_companyaddr`, `storage_state`, `storage_district`, `storage_village`, `storage_taluka`, `storage_pincode`, `storage_contactnum`, `storage_mail`, `storage_yearofincorp`,`storage_gstnum`, `storage_storematerial`, `storage_capacity`, `storage_quanity`) VALUES(%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)",(SWRfullname, SWRcompanyname, SWRcompanyaddress, SWRstate, SWRdistrict, SWRvillage, SWRtaluka, SWRpincode, SWRcontactnumber, SWRemail, SWRyearofIncorporation, SWRgstnumber, selectedStorageMaterial, SWRstoragecapcity, SWRquantity))
+    cur.execute("INSERT INTO `users`(`name`, `email`, `mobile`, `status`)VALUES(%s, %s, %s, %s)",(SWRfullname,SWRemail,SWRcontactnumber,SWRstatus))
+    mysql.connection.commit()
+     #close connection
+    cur.close()
+    flash('Thank you for register')
     print(SWRfullname, SWRcompanyname, SWRcompanyaddress, SWRstate, SWRdistrict, SWRvillage, SWRtaluka, SWRpincode, SWRcontactnumber, SWRemail, SWRyearofIncorporation, SWRgstnumber, SWRmaterialstores, SWRstoragecapcity, SWRquantity)
     return render_template('home1.html')
   return render_template('warehouse_reg.html', form=form)
@@ -554,6 +638,17 @@ def traderregistration():
     tradercontactnumber=form.contactnumber.data
     tradergstnumber=form.gstnumber.data
     traderemail=form.email.data
+    tradermaterialprocures=form.materialprocures.data
+    selectedMaterialProcures="_".join(tradermaterialprocures)
+    traderstatus="trader"
+    cur = mysql.connection.cursor()
+     #commit to DB
+    cur.execute("INSERT INTO `trader_reg`(`trader_name`, `trader_cmpname`, `trader_addr`, `trader_state`, `trader_district`, `trader_village`, `trader_taluka`, `trader_pincode`, `trader_contactnum`, `trader_mail`, `trader_yearofincorp`, `trader_gstnum`, `trader_procurematerial`) VALUES(%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)",(traderfullname, tradercompanyname, tradercompanyaddress, traderstate, traderdistrict, tradervillage, tradertaluka, traderpincode, tradercontactnumber, traderemail, traderyearofIncorporation, tradergstnumber, selectedMaterialProcures))
+    cur.execute("INSERT INTO `users`(`name`, `email`, `mobile`, `status`)VALUES(%s, %s, %s, %s)",(traderfullname, traderemail, tradercontactnumber,traderstatus))
+    mysql.connection.commit()
+     #close connection
+    cur.close()
+    flash('Thank you for register')
     print (traderfullname, tradercompanyname, tradercompanyaddress, traderstate, traderdistrict, tradervillage, tradertaluka, traderpincode, traderyearofIncorporation, tradergstnumber, traderemail )
     return render_template('home1.html')
   return render_template('trader_reg.html', form=form)
@@ -581,9 +676,19 @@ def logisticsregistration():
     LTRemail=form.email.data
     LTRcompanyName=form.companyName.data
     LTRvehicleType=form.vehicleType.data
+    logisticstatus="logistic"
+    cur = mysql.connection.cursor()
+     #commit to DB
+    cur.execute("INSERT INTO `logistics_reg`(`logistic_fullname`, `logistic_contactnum`, `logistic_mail`, `logistic_cmpname`, `logisitic_vehicletype`) VALUES(%s, %s, %s, %s, %s)",(LTRfullname, LTRcontactnumber, LTRemail, LTRcompanyName, LTRvehicleType))
+    cur.execute("INSERT INTO `users`(`name`, `email`, `mobile`, `status`)VALUES(%s, %s, %s, %s)",(LTRfullname, LTRemail, LTRcontactnumber,logisticstatus))
+    mysql.connection.commit()
+     #close connection
+    cur.close()
+    flash('Thank you for register')
     print (LTRfullname, LTRcontactnumber, LTRemail, LTRcompanyName, LTRvehicleType)
     return render_template('home1.html')
   return render_template('logistics_reg.html', form=form)
+
 
 #==========================end registations=======================================
 
@@ -679,28 +784,32 @@ def scrape12():
     all_product = soup.find_all('div', class_="eachStory")
     for item in all_product:
         d = { }
-        
+
         # image
         product_image = item.find("img", {"class":"lazy"})
+        if(product_image==None):
+          d['product_image'] = product_image
+        else:
         # image = image.text.replace('\n', "").strip()
-        product_image1 = product_image['src']
-        product_image = product_image['data-original']
-        d['product_image'] = product_image
+          product_image1 = product_image['src']
+          product_image = product_image['data-original']
+          d['product_image'] = product_image
         product_name = item.find("a")
 
         product_name12=item.find("h3").text
         product_desc=item.find("p").text
         product_time=item.find("time").text
         product_link = 'https://economictimes.indiatimes.com' + product_name['href']
-        
+
         d['product_link'] = product_link
         d["product_name12"]=product_name12
         d["product_desc"]=product_desc
         d["product_time"]=product_time
         l.append(d)
-    
+
     a1=len(l)
-    print(l[0]['product_image'])
+
+    # print(l[0]['product_image'])
 #--------------market_price in home page-----------------------------
     now = datetime.date.today()
     now1=date.today() - timedelta(1)
@@ -916,7 +1025,7 @@ def scrape12():
 
        #close connection
     cur.close()
-    
+    print("a1-final",a1)
     return render_template('index1.html',l=l,a1=a1,rv=rv,dt=dt,mark=mark,form=form)           
     
     # return render_template('index.html')
