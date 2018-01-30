@@ -512,6 +512,7 @@ def farmerregistration():
     selectedAnimalHusbandryType="_".join(farmerAnimalHusbandryType)
     selectedDairyform="_".join(farmerDairyform)
     status="farmer"
+
     cur = mysql.connection.cursor()
      #commit to DB
     cur.execute("INSERT INTO `far_regs`(`far_first`, `far_last`, `far_dob`, `far_mobile`, `far_aadher`, `far_add`, `far_state`, `far_dist`, `far_village`, `far_taluka`, `far_pin`, `far_croptype`, `far_ani_hus`, `far_dairy`) VALUES(%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)",(farmerFirstname,farmerLastname,farmerDateofBirth,farmerContactNumber,farmeraadharNumber,farmerAddress,farmerState,farmerDistrict,farmerVillage,farmerTaluka,farmerPincode, selectedCropType, selectedAnimalHusbandryType, selectedDairyform))
