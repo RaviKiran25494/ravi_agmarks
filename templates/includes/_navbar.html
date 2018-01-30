@@ -49,40 +49,40 @@
                     <div class="navigation">
                         <div id="navigation">
                             <ul>
-                                <li class="active w3-round-medium "><a href="/" title="Home"> <i class="fa fa-home w3-text-theam"></i></a></li>
+                                <li class="active w3-round-medium "><a href="/" title="Home"> <i class="fa fa-home"></i></a></li>
                                 <li>&nbsp;</li>
-                                <li class="w3-round-medium"><a href="/about" class=" w3-text-theme">About</a></li>
+                                <li class="w3-round-medium"><a href="/about">About</a></li>
                                 <li>&nbsp;</li>
-                                <li class="w3-round-medium"><a href="/about" class=" w3-text-theam">Our Vision</a></li>
+                                <li class="w3-round-medium"><a href="/our_vision">Our Vision</a></li>
                                 <li>&nbsp;</li>
-                                <li class="has-sub w3-round-medium"><a href="#" title="Service" class=" w3-text-theam">Services</a>
+                                <li class="has-sub w3-round-medium"><a href="#" title="Service">Services</a>
                                     <ul>
-                                        <li><a href="benefits_farmer">Farmers</a></li>
-                                        <li><a href="/benefits_process"> Processor</a></li>
-                                        <li><a href="/benefits_storage">Storage</a></li>
-                                        <li><a href="/benefits_supplier">Supplier</a></li>
-                                        <li><a href="/benefits_trader">Trader</a></li>
-                                        <li><a href="/benefits_logistics">Logistics</a></li>
+                                        <li><a href="/service_farmer">Farmers</a></li>
+                                        <li><a href="/service_process"> Processor</a></li>
+                                        <li><a href="/service_storage">Storage</a></li>
+                                        <li><a href="/service_supplier">Supplier</a></li>
+                                        <li><a href="/service_trader">Trader</a></li>
+                                        <li><a href="/service_logistics">Logistics</a></li>
                                     </ul>
                                 </li>
                                 <li>&nbsp;</li>
-                                <li class="has-sub w3-round-medium"><a href="#" title="Service" class="w3-text-theme">Categeries</a>
+                                <li class="has-sub w3-round-medium"><a href="#" title="Categeries">Categeries</a>
                                     <ul>
-                                        <li><a href="/services_agri">Agriculture Commodites</a></li>
-                                        <li><a href="/services_animal_hary"> Animal Husbandy</a></li>
-                                        <li><a href="/services_dairy">Dairy Farming</a></li>
+                                        <li><a href="/cate_agri">Commodites</a></li>
+                                        <li><a href="/cate_ani"> Animal Husbandy</a></li>
+                                        <li><a href="/cate_dairy">Dairy Farming</a></li>
                                     </ul>
                                 </li>
                                 <li>&nbsp;</li>
                                 
-                                <li class="w3-round-medium"><a href="/contact_us" class=" w3-text-theme">Contact Us</a> </li>
+                                <li class="w3-round-medium"><a href="/contact_us">Contact Us</a> </li>
                                 <li>&nbsp;</li>
                                 {% if session.logged_in %}
                                   <li><a href="">Hello {{session['username'] }}</a></li>
-                                  <li class="w3-round-medium"><a href="/logout" class=" w3-text-theme">Logout</a></li>
+                                  <li class="w3-round-medium"><a href="/logout">Logout</a></li>
                                 {% else %}
                                  <!--  <li><a href="/register">Register</a></li> -->
-                                  <li class="w3-round-medium"><a href="#" class=" w3-text-theme"><i class="fa fa-user"></i></a></li>
+                                  <li class="w3-round-medium"><a href="/login1"><i class="fa fa-user"></i></a></li>
                                 {% endif %}
                                 <!-- <li class="w3-theme w3-round-medium"><a href="/how_to_reg" class=" w3-text-white">How to Register</a> </li>
                                 <li>&nbsp;</li>

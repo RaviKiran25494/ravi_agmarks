@@ -1,9 +1,10 @@
+#!usr/bin/env python3
 from flask import Flask,render_template,flash,redirect,request,url_for,session,logging
-from flask_mysqldb import MySQL
+from flask_mysqldb import MySQL#pip install flask-mysqldb ,pip install WTFROMS
 from wtforms import Form,StringField,TextAreaField,PasswordField,validators,SelectField,BooleanField,SelectMultipleField,widgets
 from wtforms.fields.html5 import DateField
 from wtforms.validators import InputRequired,Length,Email
-from passlib.hash import sha256_crypt
+from passlib.hash import sha256_crypt#pip install passlib
 from db import *
 from flask import Flask
 from flask_mail import Mail, Message#pip install flask_mail
@@ -13,8 +14,8 @@ from functools import wraps
 from flask_wtf import FlaskForm
 from flask_wtf.file import FileField, FileRequired
 from werkzeug.utils import secure_filename
-from bs4 import BeautifulSoup
-import requests#scrapy
+from bs4 import BeautifulSoup#pip install beautifulsoup4
+import requests#scrapy#pip install requests
 from flask import jsonify#neewsfeeds
 from scrapingneews import scrape12#neewsfeeds
 
@@ -58,46 +59,88 @@ def signup():
 #--------------------------static routes-------------------------
 @app.route('/about')
 def about():
-    return render_template('about.html')
-@app.route('/contact_us')
+    return render_template('navbarpages/about.html')
+class Contact_usForm(Form):
+  state=StringField('State', [validators.Length(min=1, max=50),InputRequired()])
+  district=StringField('District', [validators.Length(min=1, max=50),InputRequired()])
+@app.route('/contact_us',methods = ['GET','POST'])
 def contact_us():
-    return render_template('contact_us.html')
-@app.route('/faq')
-def faq():
-    return render_template('faq.html')
+  form=Contact_usForm(request.form)
+  if request.method == 'POST' and form.validate():
+    username=form.state.data
+    password_candidate=form.district.data
+    print(username,password_candidate)
+    return redirect(url_for('scrape12'))
+
+  return render_template('contact_us.html',form=form)
+@app.route('/our_vision')
+def our_vision():
+    return render_template('navbarpages/our_vision.html')
 @app.route('/how_to_reg')
 def how_to_reg():
     return render_template('how_to_reg.html')
 #-----services
-@app.route('/services_agri')
-def services_agri():
-    return render_template('services_agri.html')
+class Cate_agriForm(Form):
+  state=StringField('State', [validators.Length(min=1, max=50),InputRequired()])
+  district=StringField('District', [validators.Length(min=1, max=50),InputRequired()])
+@app.route('/cate_agri',methods = ['GET','POST'])
+def cate_agri():
+  form=Cate_agriForm(request.form)
+  if request.method == 'POST' and form.validate():
+    username=form.state.data
+    password_candidate=form.district.data
+    print(username,password_candidate)
 
-@app.route('/services_dairy')
-def services_dairy():
-    return render_template('services_dairy.html')
-@app.route('/services_animal_hury')
-def services_animal_hury():
-    return render_template('services_animal_hury.html')
-#-----benefits
-@app.route('/benefits_farmer')
-def benefits_farmer():
-    return render_template('benefits_farmer.html')
-@app.route('/benefits_process')
-def benefits_process():
-    return render_template('benefits_process.html')
-@app.route('/benefits_storage')
-def benefits_storage():
-    return render_template('benefits_storage.html')
-@app.route('/benefits_supplier')
-def benefits_supplier():
-    return render_template('benefits_supplier.html')
-@app.route('/benefits_trader')
-def benefits_trader():
-    return render_template('benefits_trader.html')
-@app.route('/benefits_logistics')
+    cur = mysql.connection.cursor()
+
+       # get user by username
+    cur.execute("SELECT DISTINCT COMMODITY  FROM `updatetables` WHERE state = %s AND DISTRICT=%s",[username,password_candidate])
+    agri=cur.fetchall()
+    agri=list(agri)
+    comm_b={}
+    comm_c={}
+
+    for i in range(0,5):
+      comm=(agri[i]['COMMODITY'])
+      cur.execute("SELECT  COMMODITY,MIN_PRICE,MAX_PRICE,MODAL_PRICE  FROM `updatetables` WHERE state = %s AND DISTRICT=%s AND COMMODITY=%s",[username,password_candidate,comm])
+      comm_argi=cur.fetchall()
+      comm_argi=list(comm_argi)
+      comm_b[i]=comm_argi
+      comm_c[i]=comm_b[0][0]
+      
+    print(comm_c)
+
+
+    # return redirect(url_for('scrape12'))
+    return redirect(url_for('cate_agri'))
+
+  return render_template('cate_agri.html',form=form)
+
+@app.route('/cate_dairy')
+def cate_dairy():
+    return render_template('navbarpages/cate_dairy.html')
+@app.route('/cate_ani')
+def cate_ani():
+    return render_template('navbarpages/cate_ani.html')
+#-----service-------------------------------
+@app.route('/service_farmer')
+def service_farmer():
+    return render_template('navbarpages/service_farmar.html')
+@app.route('/service_process')
+def service_process():
+    return render_template('navbarpages/service_process.html')
+@app.route('/service_storage')
+def service_storage():
+    return render_template('navbarpages/service_storage.html')
+@app.route('/service_supplier')
+def service_supplier():
+    return render_template('navbarpages/service_supplier.html')
+@app.route('/service_trader')
+def service_trader():
+    return render_template('navbarpages/service_trader.html')
+@app.route('/service_logistics')
 def services_logistics():
-    return render_template('benefits_logistics.html')
+    return render_template('navbarpages/service_logistics.html')
 
 
 #-------------------------end static routes----------------------
@@ -341,7 +384,9 @@ def refresh():
        #close connection
     cur.close()
 
-    return render_template('adminupdate.html',dt=dt,rv=rv)
+    return render_template('cate_ani.html')
+
+    # return render_template('adminupdate.html',dt=dt,rv=rv)
 
 
 # #----------------updated-market-prices-----------------------
@@ -700,7 +745,7 @@ class LogForm(Form):
 def log():
   form=LogForm(request.form)
   if request.method == 'POST' and form.validate():
-    username=form.username.data
+    username = form.username.data
     password_candidate=form.password.data
 
     cur = mysql.connection.cursor()
@@ -847,7 +892,7 @@ def scrape12():
       rv=cur.fetchall()
       dt=now1
     if(z==1):   
-      cur.execute("SELECT * FROM `%s` WHERE `COMMODITY`='Paddy'AND `VARIETY`='Paddy'"%d)
+      cur.execute("SELECT * FROM `%s` WHERE `COMMODITY`='Paddy'AND `VARIET.Y`='Paddy'"%d)
       paddy=cur.fetchall()
       paddy=list(paddy)
       mark["paddy_com"]=paddy[0]['COMMODITY']
@@ -1025,8 +1070,8 @@ def scrape12():
 
        #close connection
     cur.close()
-    print("a1-final",a1)
-    return render_template('index1.html',l=l,a1=a1,rv=rv,dt=dt,mark=mark,form=form)           
+
+    return render_template('index1.html',l=l,rv=rv,dt=dt,mark=mark,form=form)           
     
     # return render_template('index.html')
 

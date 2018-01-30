@@ -1,0 +1,24 @@
+{% extends 'layout.html' %}
+{% block body %}
+	<div  class="col-lg-3 col-md-3 col-sm-12 col-xs-12"></div>
+      <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12 pdb20">
+        <div class="w3-card-2" style="overflow:hidden;">
+          <header class="w3-container w3-center">
+            <h3 class="w3-text-white">Agriculture</h3>
+          </header>
+          {% from "includes/_formhelper.html" import render_field %}
+          <form method="POST" class="w3-container" action="/cate_agri">
+            <div class="w3-section">
+            <i class="fa fa-user w3-xlarge"></i>
+              {{render_field(form.state, class_="w3-input w3-border w3-margin-bottom w3-opacity-min", placeholder="Enter State")}}
+              <i class="fa fa-lock w3-xlarge"></i>
+              {{render_field(form.district, class_="w3-input w3-border w3-opacity-min", placeholder="Enter District")}}
+              <button class="w3-button w3-block pdb15 w3-section w3-themeo-d1 w3-text-white w3-hover-theme" type="submit">submit</button>
+            </div>
+          </form>
+
+        </div>
+      </div>
+      <div  class="col-lg-3 col-md-3 col-sm-12 col-xs-12"></div>
+
+{% endblock %}

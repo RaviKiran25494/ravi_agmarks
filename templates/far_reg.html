@@ -22,10 +22,12 @@
         </div>
       </div>
       <div class="w3-row w3-section">
-        <div class="w3-col" style="width:100px">
-          <b>Date of Birth</b>
+        <div class="w3-col" style="width:50px">
+          <i class="w3-xxlarge fa fa-calendar"></i>
         </div>
-        {{render_field(form.dateofBirth, class_="form-control w3-border w3-cell-middle", style="width: 150px;", id="exampleInputDOB1")}}
+        <div class="w3-rest">
+        <center><label>Date of Birth</label></center>
+        {{render_field(form.dateofBirth, class_="w3-input w3-border", id="exampleInputDOB1")}}
       </div>
       <div class="w3-row w3-section">
         <div class="w3-col" style="width:50px">
@@ -129,6 +131,7 @@
         </div>
       </div>
       <button class="w3-button w3-block w3-section w3-black ">Register</button>
+      <h5><a href="/how_to_reg">Need Help</a></h5>
     </div>
   </form>
   </center>
