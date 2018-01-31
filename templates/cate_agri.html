@@ -1,24 +1,96 @@
 {% extends 'layout.html' %}
 {% block body %}
-	<div  class="col-lg-3 col-md-3 col-sm-12 col-xs-12"></div>
-      <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12 pdb20">
-        <div class="w3-card-2" style="overflow:hidden;">
+  <div class="w3-row">
+	   
+      <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 pdb20 pdt20">
+        <div class="w3-card-2 pdb10" style="overflow:hidden;">
           <header class="w3-container w3-center">
-            <h3 class="w3-text-white">Agriculture</h3>
+            <h3>Agriculture</h3>
           </header>
           {% from "includes/_formhelper.html" import render_field %}
-          <form method="POST" class="w3-container" action="/cate_agri">
-            <div class="w3-section">
-            <i class="fa fa-user w3-xlarge"></i>
-              {{render_field(form.state, class_="w3-input w3-border w3-margin-bottom w3-opacity-min", placeholder="Enter State")}}
-              <i class="fa fa-lock w3-xlarge"></i>
-              {{render_field(form.district, class_="w3-input w3-border w3-opacity-min", placeholder="Enter District")}}
-              <button class="w3-button w3-block pdb15 w3-section w3-themeo-d1 w3-text-white w3-hover-theme" type="submit">submit</button>
+          <form method="POST" class="w3-container w3-center" action="/cate_agri">
+            <div class="w3-section pdb20 pdt20" style="display: inline;">
+            
+              <span>
+                {{render_field(form.state, class_="w3-border w3-opacity-min", placeholder="Enter State", style="height:35px")}}
+                
+              </span>&nbsp;&nbsp;&nbsp;&nbsp;
+              <span>
+                {{render_field(form.district, class_="w3-border w3-opacity-min",placeholder="Enter District", style="height:35px")}}
+              </span>&nbsp;&nbsp;&nbsp;&nbsp;
+              <span>
+                <button class="btn w3-themeo-d1 w3-text-white w3-hover-theme" type="submit" style="height:35px;"><b style="top:0">submit</b></button>
+              </span>
             </div>
           </form>
 
         </div>
+        &nbsp;&nbsp;&nbsp;&nbsp;
       </div>
-      <div  class="col-lg-3 col-md-3 col-sm-12 col-xs-12"></div>
+      
+
+
+      </div>
+      {% if(comm_lc>0) %}
+        <div class="w3-row">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+              <div class="w3-card">
+                <header class="w3-container  w3-center">
+                  <h3 class="w3-text-theme ">Market</h3>
+                </header>
+                <div class="w3-section w3-mobile">
+                  <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <div class="table-responsive w3-center">
+                      <h4 class="w3-text-theme">Cereals &amp; Pulses</h4>
+                      
+                      <table style="width:100%" class="table w3-mobile">
+                          <tr>
+                            
+                            <th class="w3-container w3-theme w3-center w3-padding-8"><center>COMMODITY</center></th> 
+                            <th class="w3-container w3-theme w3-center w3-padding-8"><center>MSP</center></th>
+                            <th class="w3-container w3-theme w3-center w3-padding-8"><center>NP</center></th>
+                            <th class="w3-container w3-theme w3-center w3-padding-8"><center>MxPP</center></th>
+                          </tr>
+                          {% if(aa>5)%}
+                            {%for i in range(0,5)%}
+                              <tr>
+                                <td class="w3-themeo"><center><b>{{comm_c[i]['COMMODITY']}}</b></center></td>  
+                                <td><center><b>{{comm_c[i]['MIN_PRICE']}}</b></center></td>
+                                <td><center><b>{{comm_c[i]['MAX_PRICE']}}</b></center></td>
+                                <td><center><b>{{comm_c[i]['MODAL_PRICE']}}</b></center></td>
+                              </tr>
+                            {% endfor %}
+                          {% endif %}
+                          {% if(aa<5)%}
+                            {%for i in range(0,aa)%}
+                              <tr>
+                                <td class="w3-themeo"><center><b>{{comm_c[i]['COMMODITY']}}</b></center></td>  
+                                <td><center><b>{{comm_c[i]['MIN_PRICE']}}</b></center></td>
+                                <td><center><b>{{comm_c[i]['MAX_PRICE']}}</b></center></td>
+                                <td><center><b>{{comm_c[i]['MODAL_PRICE']}}</b></center></td>
+                              </tr>
+                            {% endfor %}
+                          {% endif %}                       
+                      </table>
+            
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+        </div>
+          {% endif %}
+
+
 
 {% endblock %}
+<script type="text/javascript">
+$(document).ready(function(){
+$(".one").click(function()   
+{  
+  $.get("register",function(data){
+    $("#district").html(data);
+    });
+      
+});
+</script>

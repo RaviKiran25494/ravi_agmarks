@@ -24,18 +24,24 @@ import datetime
 from datetime import date, timedelta
 now = datetime.date.today()
 dt=now
- 
+district1=[]
+
+db = Db()
+district1 = []
+for i in db.execute("SELECT dist,dist_id FROM state_dist"):
+    district1.append(i)
+db.commit()
+db.close()
+print(district1)
 
 
 
 # from flask_wtf.csrf import CSRFProtect#pip install flask_csrf
-db = Db()
-courseList = []
+aa=0
 mark={}
 # for i in db.execute("SELECT * FROM course_names"):
 #     courseList.append(i)
-db.commit()
-db.close()
+
 
 app=Flask(__name__)
 app.config.from_object(__name__)
@@ -65,24 +71,26 @@ class Contact_usForm(Form):
   district=StringField('District', [validators.Length(min=1, max=50),InputRequired()])
 @app.route('/contact_us',methods = ['GET','POST'])
 def contact_us():
-  form=Contact_usForm(request.form)
-  if request.method == 'POST' and form.validate():
-    username=form.state.data
-    password_candidate=form.district.data
-    print(username,password_candidate)
-    return redirect(url_for('scrape12'))
+  # form=Contact_usForm(request.form)
+  # if request.method == 'POST' and form.validate():
+  #   username=form.state.data
+  #   password_candidate=form.district.data
+  #   print(username,password_candidate)
+    # return redirect(url_for('scrape12'))
+    return render_template('navbarpages/contact_us.html')
 
-  return render_template('contact_us.html',form=form)
 @app.route('/our_vision')
 def our_vision():
     return render_template('navbarpages/our_vision.html')
 @app.route('/how_to_reg')
 def how_to_reg():
     return render_template('how_to_reg.html')
-#-----services
+#-----services-----------------
+comm_c={}
 class Cate_agriForm(Form):
-  state=StringField('State', [validators.Length(min=1, max=50),InputRequired()])
-  district=StringField('District', [validators.Length(min=1, max=50),InputRequired()])
+  state = SelectField(u'State', choices=[('','Choose your State'),('Andhra Pradesh','Andhra Pradesh'),('Telangana','Telangana')])
+  district = SelectField(u'District', choices=district1)
+
 @app.route('/cate_agri',methods = ['GET','POST'])
 def cate_agri():
   form=Cate_agriForm(request.form)
@@ -98,23 +106,52 @@ def cate_agri():
     agri=cur.fetchall()
     agri=list(agri)
     comm_b={}
-    comm_c={}
+    aa=len(agri)
+    if(aa>0):
+      print(aa)
+      for i in range(0,aa):
 
-    for i in range(0,5):
-      comm=(agri[i]['COMMODITY'])
-      cur.execute("SELECT  COMMODITY,MIN_PRICE,MAX_PRICE,MODAL_PRICE  FROM `updatetables` WHERE state = %s AND DISTRICT=%s AND COMMODITY=%s",[username,password_candidate,comm])
-      comm_argi=cur.fetchall()
-      comm_argi=list(comm_argi)
-      comm_b[i]=comm_argi
-      comm_c[i]=comm_b[0][0]
-      
-    print(comm_c)
+        comm=(agri[i]['COMMODITY'])
+
+        cur.execute("SELECT  COMMODITY,MIN_PRICE,MAX_PRICE,MODAL_PRICE  FROM `updatetables` WHERE state = %s AND DISTRICT=%s AND COMMODITY=%s",[username,password_candidate,comm])
+        comm_argi=cur.fetchall()
+        comm_argi=list(comm_argi)
+        comm_b[i]=comm_argi
+        comm_c[i]=comm_b[i][0]
 
 
-    # return redirect(url_for('scrape12'))
-    return redirect(url_for('cate_agri'))
 
-  return render_template('cate_agri.html',form=form)
+      # return redirect(url_for('scrape12'))
+      comm_lc=len(comm_c)
+      return render_template('cate_agri.html',comm_c=comm_c,form=form,comm_lc=comm_lc,aa=aa)
+    # elif(len(agri)>0 and len(agri)<=3):
+    #   print(len(agri))
+    #   for i in range(0,3):
+
+    #     comm=(agri[i]['COMMODITY'])
+
+    #     cur.execute("SELECT  COMMODITY,MIN_PRICE,MAX_PRICE,MODAL_PRICE  FROM `updatetables` WHERE state = %s AND DISTRICT=%s AND COMMODITY=%s",[username,password_candidate,comm])
+    #     comm_argi=cur.fetchall()
+    #     comm_argi=list(comm_argi)
+    #     comm_b[i]=comm_argi
+    #     comm_c[i]=comm_b[i][0]
+
+
+
+    #   # return redirect(url_for('scrape12'))
+    #   comm_lc=len(comm_c)
+    #   return render_template('cate_agri.html',comm_c=comm_c,form=form,comm_lc=comm_lc)
+    else:
+      comm_c.clear()
+      comm_lc=len(comm_c)
+      return render_template('cate_agri.html',form=form,comm_c=comm_c,comm_lc=comm_lc,aa=aa)
+
+  comm_c.clear()
+  comm_lc=len(comm_c)
+  return render_template('cate_agri.html',form=form,comm_c=comm_c,comm_lc=comm_lc)
+@app.route('/cate_agri1')
+def cate_agri1():
+    return render_template('navbarpages/cate_agri1.html')
 
 @app.route('/cate_dairy')
 def cate_dairy():
@@ -141,10 +178,13 @@ def service_trader():
 @app.route('/service_logistics')
 def services_logistics():
     return render_template('navbarpages/service_logistics.html')
+@app.route('/service_vendor')
+def services_vendor():
+    return render_template('navbarpages/service_vendor.html')
 
 
 #-------------------------end static routes----------------------
-#-----------------------------login-login-------------------
+#-----------------------------login-login----------------
 @app.route('/login1',methods = ['GET','POST'])
 def login1():
    if request.method == 'POST':
@@ -188,7 +228,7 @@ def login1():
            cur.close()
        else:
            #app.logger.info('No user')
-           error:'Username not found'
+           error = 'Username not found'
            return render_template('login1.html',error=error)
 
    return render_template('login1.html')
@@ -783,7 +823,7 @@ def log():
         cur.close()
     else:
          #app.logger.info('No user')
-        error:'Username not found'
+        error = 'Username not found'
   return render_template('index1.html', form=form,l=l,a1=a1,dt=dt,mark=mark)
 def is_logged_in(f):
    @wraps(f)

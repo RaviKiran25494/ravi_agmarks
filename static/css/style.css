@@ -32,7 +32,7 @@ hr { border-bottom: 1px solid #dfdfdf; margin-bottom: 40px; margin-top: 40px; }
 /*-----------------------------------
     3. Buttons 
 -----------------------------------*/
-.btn { font-family: 'Poppins', sans-serif; font-size: 13px; text-transform: uppercase; font-weight: 700; padding: 14px 24px; margin-bottom: 4px; letter-spacing: 1.4px; border-radius: 50px; line-height: 1.6; border: transparent; -webkit-transition: all 0.3s; -moz-transition: all 0.3s; transition: all 0.3s; word-wrap: break-word; white-space: normal !important; }
+.btn { font-family: 'Poppins', sans-serif; font-size: 13px; text-transform: uppercase; font-weight: 700; padding: 8px 24px; margin-bottom: 4px; letter-spacing: 1.4px; border-radius: 50px; line-height: 1.6; border: transparent; -webkit-transition: all 0.3s; -moz-transition: all 0.3s; transition: all 0.3s; word-wrap: break-word; white-space: normal !important; }
 .btn-primary { background-color: #fb6a30; color: #fff; }
 .btn-primary:hover { background-color: #ea5c24; color: #fff; }
 .btn-primary.focus, .btn-primary:focus { background-color: #ea5c24; color: #fff; }
@@ -234,11 +234,11 @@ button.btn { margin-right: -1px; }
 #navigation li:hover>ul>li { height: 46px; }
 #navigation ul ul ul { margin-left: 100%; top: 0; }
 #navigation.align-right ul ul ul { margin-left: 0; margin-right: 100%; }
-#navigation ul ul li a { background-color: #1a4178; padding: 20px 28px; width: 218px; font-size: 13px; text-decoration: none; color: #fff; font-weight: 600;  border-bottom: #e65f29 1px solid; letter-spacing: 1px; margin-bottom:3px; }
+#navigation ul ul li a { background-color: #fff ; color: #000; padding: 16px 20px; width: 180px; font-size: 13px; text-decoration: none; font-weight: 600;  border-bottom: darkblue 1px solid; letter-spacing: 1px; margin-bottom:3px; }
 #navigation ul ul li:first-child>a { border-top-right-radius: 5px; }
 #navigation ul ul li:last-child>a { border-bottom-right-radius: 5px; border-bottom-left-radius: 5px; }
 #navigation ul ul li:last-child>a, #navigation ul ul li.last-item>a { border-bottom: 0; }
-#navigation ul ul li:hover>a, #navigation ul ul li a:hover { color: #fff; background-color: #1a4178; }
+#navigation ul ul li:hover>a, #navigation ul ul li a:hover { color: #1a4178; background-color: #fff; }
 #navigation ul ul li.has-sub>a:after { position: absolute; top: 14px; right: 11px; width: 8px; height: 2px; display: block; background: #dddddd; content: ''; }
 #navigation.align-right ul ul li.has-sub>a:after { right: auto; left: 11px; }
 #navigation ul ul li.has-sub>a:before { position: absolute; top: 13px; right: 14px; display: block; width: 2px; height: 8px; background: #dddddd; content: ''; -webkit-transition: all .25s ease; -moz-transition: all .25s ease; -ms-transition: all .25s ease; -o-transition: all .25s ease; transition: all .25s ease; }
