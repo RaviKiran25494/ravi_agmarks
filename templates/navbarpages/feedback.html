@@ -1,0 +1,48 @@
+{% extends 'layout.html' %}
+<script type="text/javascript">
+$(document).ready(function(){
+        $('.log-btn').click(function(){
+            $('.log-status').addClass('wrong-entry');
+           $('.alert').fadeIn(500);
+           setTimeout( "$('.alert').fadeOut(1500);",3000 );
+        });
+        $('.form-control').keypress(function(){
+            $('.log-status').removeClass('wrong-entry');
+        });
+
+    });
+</script>
+{% block body %}
+
+<div class="pdb10" id="header"></div>
+<div class="login-form w3-card w3-border w3-border-indigo w3-hover-border-orange">
+	{% from "includes/_formhelper.html" import render_field %}
+   	<form action="/feedback" method="POST">
+	    <h2 class="w3-center w3-panel w3-indigo w3-padding" style="font-size:2rem; font-weight:400">
+	    	Feedback
+	    </h2>
+	    <div class="form-group">
+	    	{{render_field(form.name, class_="form-control", placeholder="Name")}}
+	       	<i class="fa fa-user"></i>
+	    </div>
+	    <div class="form-group log-status">
+	       {{render_field(form.phone, class_="form-control", placeholder="Phone")}}
+	       <i class="fa fa-phone"></i>
+	    </div>
+	    <div class="form-group log-status">
+	       {{render_field(form.email, class_="form-control", placeholder="Email")}}
+	       <i class="fa fa-envelope-o"></i>
+	    </div>
+	    <div class="form-group log-status">
+	       {{render_field(form.message, class_="form-control", placeholder="Message")}}
+	       <i class="fa fa-pencil"></i>
+	    </div>
+	    <span class="alert">Invalid Credentials</span>
+	    <div class="w3-center"> 
+	       <button type="submit" class="log-btn w3-button w3-black w3-hover-indigo" >Send</button>
+		</div>
+	</form>
+</div>
+<div class="pdt10" id="footer"></div>
+
+{% endblock %}

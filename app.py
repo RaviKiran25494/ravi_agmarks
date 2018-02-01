@@ -32,7 +32,6 @@ for i in db.execute("SELECT dist,dist_id FROM state_dist"):
     district1.append(i)
 db.commit()
 db.close()
-print(district1)
 
 
 
@@ -67,17 +66,31 @@ def signup():
 def about():
     return render_template('navbarpages/about.html')
 class Contact_usForm(Form):
-  state=StringField('State', [validators.Length(min=1, max=50),InputRequired()])
-  district=StringField('District', [validators.Length(min=1, max=50),InputRequired()])
+  Name=StringField('Name', [validators.Length(min=1, max=50),InputRequired()])
+  Phone=StringField('Phone', [validators.Length(min=1, max=14),InputRequired()])
+  Message=StringField('Message', [validators.Length(min=1, max=250),InputRequired()])
 @app.route('/contact_us',methods = ['GET','POST'])
 def contact_us():
-  # form=Contact_usForm(request.form)
-  # if request.method == 'POST' and form.validate():
-  #   username=form.state.data
-  #   password_candidate=form.district.data
-  #   print(username,password_candidate)
-    # return redirect(url_for('scrape12'))
-    return render_template('navbarpages/contact_us.html')
+  form=Contact_usForm(request.form)
+  if request.method == 'POST' and form.validate():
+    name=form.Name.data
+    phone=form.Phone.data
+    message=form.Message.data
+    print(name,phone,message)
+    cur = mysql.connection.cursor()
+     #commit to DB
+    cur.execute("INSERT INTO `contact_us`(`Name`, `Phone`, `Message`)VALUES(%s, %s, %s)",(name,phone,message))
+
+    mysql.connection.commit()
+
+     #close connection
+    cur.close()
+
+
+    flash('Thank you ........')
+
+    return redirect(url_for('scrape12'))
+  return render_template('navbarpages/contact_us.html',form=form)
 
 @app.route('/our_vision')
 def our_vision():
@@ -182,6 +195,43 @@ def services_logistics():
 def services_vendor():
     return render_template('navbarpages/service_vendor.html')
 
+#-------------------------footer nav links---------------------
+@app.route('/privacy_policy')
+def privacy_policy():
+    return render_template('navbarpages/privacy_policy.html')
+@app.route('/terms_conditions')
+def terms_conditions():
+    return render_template('navbarpages/terms_conditions.html')
+class FeedbackForm(Form):
+  name=StringField('Name', [validators.Length(min=1, max=50),InputRequired()])
+  phone=StringField('Phone', [validators.Length(min=1, max=14),InputRequired()])
+  email=StringField('Phone', [validators.Length(min=1, max=24),InputRequired()])
+  message=StringField('Message', [validators.Length(min=1, max=250),InputRequired()])
+@app.route('/feedback',methods = ['GET','POST'])
+def feedback():
+  form=FeedbackForm(request.form)
+  print("hi")
+  if request.method == 'POST' and form.validate():
+    print("hello")
+    name=form.name.data
+    phone=form.phone.data
+    email=form.email.data
+    message=form.message.data
+    print(name,phone,message)
+    cur = mysql.connection.cursor()
+     #commit to DB
+    cur.execute("INSERT INTO `feedback`(`Name`, `Phone`, `Email`,`Message`)VALUES(%s, %s, %s,%s)",(name,phone,email,message))
+
+    mysql.connection.commit()
+
+     #close connection
+    cur.close()
+
+
+    flash('Thank you ........')
+
+    return redirect(url_for('scrape12'))
+  return render_template('navbarpages/feedback.html',form=form)
 
 #-------------------------end static routes----------------------
 #-----------------------------login-login----------------
@@ -778,53 +828,44 @@ def logisticsregistration():
 
 #==========================end registations=======================================
 
-class LogForm(Form):
-  username=StringField('User name', [validators.Length(min=1, max=50),InputRequired()])
-  password=PasswordField('Pass word', [validators.Length(min=1, max=50),InputRequired()])
+class Log_adminForm(Form):
+  adminname=StringField('User name', [validators.Length(min=1, max=50),InputRequired()])
+  adminpassword=PasswordField('Pass word', [validators.Length(min=1, max=50)])
  
-@app.route('/log', methods=['GET', 'POST'])
-def log():
-  form=LogForm(request.form)
+@app.route('/logadmin', methods=['GET', 'POST'])
+def logadmin():
+  form=Log_adminForm(request.form)
   if request.method == 'POST' and form.validate():
-    username = form.username.data
-    password_candidate=form.password.data
-
-    cur = mysql.connection.cursor()
-
-       # get user by username
-
-    result = cur.execute("SELECT * FROM users WHERE name = %s",[username])
-    print('name:',username)
-    if result > 0:
-
-        data = cur.fetchone()
-        password = data['status']
+    adminname = form.adminname.data
+    adminpassword = form.adminpassword.data
+    if (adminname=='adminadmin'):
+        password = 'admin@astona#123'
 
          # print('password1',password1);
-        print('password:',password_candidate)
+        print('password:',adminpassword)
 
          # if sha256_crypt.verify(password_candidate,password):
-        if (password_candidate==password):
+        if (adminpassword==password):
 
 
              #app.logger.info('Passwords Matched')
             session['logged_in'] = True
-            session['username'] = username
+            session['username'] = adminname
              # print('password11',password_candidate);
              # print('password12:',password)
 
             flash('You are now logged in','success')
-            return render_template('home1.html')
+            return redirect(url_for('scrape12'))
         else:
             error = 'Invalid Login'
              #app.logger.info('Passwords Not matched')
-            return render_template('index1.html', form=form,l=l,a1=a1,dt=dt,mark=mark,error=error)
+            return render_template('navbarpages/admin.html', form=form)
          # close connection
         cur.close()
     else:
          #app.logger.info('No user')
         error = 'Username not found'
-  return render_template('index1.html', form=form,l=l,a1=a1,dt=dt,mark=mark)
+  return render_template('navbarpages/admin.html', form=form)
 def is_logged_in(f):
    @wraps(f)
    def wrap(*args, **kwargs):
